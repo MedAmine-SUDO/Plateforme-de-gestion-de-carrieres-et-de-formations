@@ -1,0 +1,25 @@
+package com.example.demo;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class RessourceController {
+@Autowired
+private RessourceRepository ressourceRepository;
+@GetMapping("/")
+public List <Ressource> GetRessources(){
+	return ressourceRepository.findAll();
+	
+
+}
+@GetMapping("/{id}")
+public Ressource GetRessources(@PathVariable String id){
+	return ressourceRepository.findById(id).orElse(null);
+	
+}
+}

@@ -48,6 +48,8 @@ public class TestController {
             Test _test = newTest.get();
             _test.setNumTest(test.getNumTest());
             _test.setQuestionList(test.getQuestionList());
+            _test.setUser_id(test.getUser_id());
+            _test.setResult(test.getResult());
             testService.save(_test);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

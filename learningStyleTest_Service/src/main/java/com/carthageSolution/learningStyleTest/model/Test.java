@@ -13,11 +13,15 @@ public class Test {
     
     private Integer numTest;
     private List<Question> questionList;
+    private String user_id;
+    private String result;
 
-    public Test(String id, Integer numTest, List<Question> questionList) {
+    public Test(String id, Integer numTest, List<Question> questionList, String user_id, String result) {
         this.id = id;
         this.numTest = numTest;
         this.questionList = questionList;
+        this.user_id = user_id;
+        this.result = result;
     }
 
     public Test() {
@@ -47,12 +51,30 @@ public class Test {
         this.questionList = questionList;
     }
 
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
     @Override
     public String toString() {
         return "Test{" +
-                "id_test='" + id + '\'' +
+                "id='" + id + '\'' +
                 ", numTest=" + numTest +
                 ", questionList=" + questionList +
+                ", user_id='" + user_id + '\'' +
+                ", result='" + result + '\'' +
                 '}';
     }
 }

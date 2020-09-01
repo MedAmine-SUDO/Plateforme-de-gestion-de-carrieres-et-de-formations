@@ -3,6 +3,8 @@ package com.carthageSolution.learningStyleTest.controller;
 import com.carthageSolution.learningStyleTest.model.Question;
 import com.carthageSolution.learningStyleTest.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,12 @@ public class QuestionController {
 
     @Autowired
     private QuestionService questionService;
+
+    @GetMapping("/top3")
+    public List<Question> findtop3Question(){
+        Pageable pageable = PageRequest.of(0, 3);
+        return questionService.findTopByQuestionNbrExists((java.awt.print.Pageable) pageable);
+    }
 
     @GetMapping("")
     public List<Question> getAllQuestions(){
@@ -39,8 +47,9 @@ public class QuestionController {
     }
 
     @DeleteMapping("/deleteAll")
-    public void deleteAllQuestions(){
+    public ResponseEntity<?> deleteAllQuestions(){
         questionService.deleteAll();
+        return new ResponseEntity<>("All questions deleted successfully", HttpStatus.OK);
     }
 
     @PutMapping("/{id_question}")

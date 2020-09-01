@@ -18,19 +18,36 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/result")
-public class Result {
+public class ResultController {
 
     @Autowired
     private TestService testService;
 
+    @GetMapping("/style/{id}")
+    public String getlearningStyle(@PathVariable("id") String id){
+        String style="Your learning style is " ;
+        HashMap<String, Integer> map = getResult(id);
+        for(Map.Entry<String, Integer> set: map.entrySet()){
+            if(set.getValue() != 0){
+                switch(set.getKey()){
+                    case "VISUAL": style += set.getKey(); break;
+                    case "AURAL": style += set.getKey(); break;
+                    case "READWRITE": style += set.getKey(); break;
+                    case "KINESTHETIC": style += set.getKey(); break;
+                }
+            }
+        }
+
+        return style;
+    }
+
     @GetMapping("/{id}")
-    public void getResult(@PathVariable("id") String id) {
+    public HashMap<String, Integer> getResult(@PathVariable("id") String id) {
         HashMap<String, Integer> map = new HashMap<String, Integer>();
         map.put("VISUAL", 0);
         map.put("AURAL", 0);
         map.put("READWRITE", 0);
         map.put("KINESTHETIC", 0);
-
         Optional<Test> test = testService.findById(id);
         Test newTest = test.get();
         List<Question> questionList = newTest.getQuestionList();
@@ -47,5 +64,6 @@ public class Result {
             }
         }
         System.out.println(map);
+        return map;
     }
 }

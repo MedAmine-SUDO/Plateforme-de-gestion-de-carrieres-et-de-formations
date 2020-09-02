@@ -13,45 +13,45 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/question")
+@RequestMapping("/api/testProfile/question")
 public class QuestionController {
 
     @Autowired
     private QuestionService questionService;
 
-    @GetMapping("/top3")
-    public List<Question> findtop3Question(){
-        Pageable pageable = PageRequest.of(0, 3);
-        return questionService.findTopByQuestionNbrExists((java.awt.print.Pageable) pageable);
-    }
-
+    //Get all questions
     @GetMapping("")
     public List<Question> getAllQuestions(){
         return questionService.findAll();
     }
 
+    //Get specefic question by its number
     @GetMapping("/{nbr}")
     public Optional<Question> getQuestionByNbr(@PathVariable("nbr") Integer nbr){
         return questionService.findByQuestionNbr(nbr);
     }
 
+    //Create question
     @PostMapping("/createQuestion")
     public ResponseEntity<?> createQuestion(@RequestBody Question question){
         questionService.createQuestion(question);
         return new ResponseEntity("Question added successfully", HttpStatus.OK);
     }
 
+    //Delete a question by it's id
     @DeleteMapping("/delete/{id}")
     public void deleteQuestion(@PathVariable("id") String id){
         questionService.deleteQuestion(id);
     }
 
+    //Delete all questions
     @DeleteMapping("/deleteAll")
     public ResponseEntity<?> deleteAllQuestions(){
         questionService.deleteAll();
         return new ResponseEntity<>("All questions deleted successfully", HttpStatus.OK);
     }
 
+    //Update a question
     @PutMapping("/{id_question}")
     public ResponseEntity<Question> updateQuestion(@PathVariable("id_question") String id_question, @RequestBody Question question){
         Optional<Question> newQuestion = questionService.findById(id_question);

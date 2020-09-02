@@ -17,33 +17,35 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/result")
+@RequestMapping("/api/testProfile/result")
 public class ResultController {
 
     @Autowired
     private TestService testService;
 
+    //Get your learning style by specifiying test id
     @GetMapping("/style/{id}")
     public String getlearningStyle(@PathVariable("id") String id){
-        String style="Your learning style is " ;
+        StringBuilder style= new StringBuilder("Your learning style is ");
         HashMap<String, Integer> map = getResult(id);
         for(Map.Entry<String, Integer> set: map.entrySet()){
             if(set.getValue() != 0){
                 switch(set.getKey()){
-                    case "VISUAL": style += set.getKey(); break;
-                    case "AURAL": style += set.getKey(); break;
-                    case "READWRITE": style += set.getKey(); break;
-                    case "KINESTHETIC": style += set.getKey(); break;
+                    case "VISUAL": style.append(set.getKey()); break;
+                    case "AURAL": style.append(set.getKey()); break;
+                    case "READWRITE": style.append(set.getKey()); break;
+                    case "KINESTHETIC": style.append(set.getKey()); break;
                 }
             }
         }
 
-        return style;
+        return style.toString();
     }
 
+    //Get test result as a HashMap
     @GetMapping("/{id}")
     public HashMap<String, Integer> getResult(@PathVariable("id") String id) {
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        HashMap<String, Integer> map = new HashMap<>();
         map.put("VISUAL", 0);
         map.put("AURAL", 0);
         map.put("READWRITE", 0);
@@ -55,7 +57,7 @@ public class ResultController {
             Question question = questionList.get(i);
             for(int j=0;j<question.getAnswers().size();j++){
                 if(question.getAnswers().get(j).isChecked()){
-                    String categ = question.getAnswers().get(j).getAnswerCategory().getType();
+                    String categ = question.getAnswers().get(j).getAnswerCategory().toString();
                     if(map.containsKey(categ)){
                         Integer val = (Integer) map.get(categ);
                         map.replace(categ, val+1);

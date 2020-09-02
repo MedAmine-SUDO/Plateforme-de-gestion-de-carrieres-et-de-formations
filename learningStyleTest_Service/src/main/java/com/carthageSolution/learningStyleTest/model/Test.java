@@ -1,6 +1,7 @@
 package com.carthageSolution.learningStyleTest.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -8,15 +9,19 @@ import java.util.List;
 @Document(collection="tests")
 public class Test {
 
+    //This sequence is for auto-incrementing the testNumber
+    @Transient
+    public static final String SEQUENCE_NAME="test_sequence";
+
     @Id
     private String id;
     
-    private Integer numTest;
+    private Long numTest;
     private List<Question> questionList;
     private String user_id;
     private String result;
 
-    public Test(String id, Integer numTest, List<Question> questionList, String user_id, String result) {
+    public Test(String id, Long numTest, List<Question> questionList, String user_id, String result) {
         this.id = id;
         this.numTest = numTest;
         this.questionList = questionList;
@@ -35,11 +40,11 @@ public class Test {
         this.id = id;
     }
 
-    public Integer getNumTest() {
+    public Long getNumTest() {
         return numTest;
     }
 
-    public void setNumTest(Integer numTest) {
+    public void setNumTest(Long numTest) {
         this.numTest = numTest;
     }
 

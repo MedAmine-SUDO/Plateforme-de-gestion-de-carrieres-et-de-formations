@@ -53,9 +53,4 @@ public class QuestionServiceImpl implements QuestionService{
     public void updateQuestion(Question question) {
         questionRepository.save(question);
     }
-
-    @Override
-    public List<Question> findTopByQuestionNbrExists(Pageable pageable) {
-        return questionRepository.findTopByQuestionNbrExists(pageable);
-    }
 }

@@ -11,5 +11,4 @@ import java.util.Optional;
 public interface QuestionRepository extends MongoRepository<Question, String> {
     Optional<Question> findByQuestionNbr(Integer nbr);
     List<Question> findAll();
-    List<Question> findTopByQuestionNbrExists(Pageable pageable);
 }

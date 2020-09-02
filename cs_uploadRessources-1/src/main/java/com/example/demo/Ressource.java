@@ -1,22 +1,31 @@
 package com.example.demo;
 
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-@Document
+@Document(collection = "ressources")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Ressource {
-	public Ressource(String id, String title, String description, String file) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.description = description;
-		this.file = file;
+	
+	@Id
+	private String id;
+	private String title;
+	private String description;
+	private String file;
+	private String idPhoto;
+	private String idVideo;
+	public String getIdPhoto() {
+		return idPhoto;
+	}
+	public void setIdPhoto(String idPhoto) {
+		this.idPhoto = idPhoto;
 	}
 	public String getId() {
 		return id;
@@ -42,10 +51,15 @@ public class Ressource {
 	public void setFile(String file) {
 		this.file = file;
 	}
-	@Id
-	private String id;
-	private String title;
-	private String description;
-	private String file;
+	public String getIdVideo() {
+		return idVideo;
+	}
 	
+	public void setIdVideo(String idVideo) {
+		this.idVideo = idVideo;
+	}
+	
+	
+
+		
 }

@@ -42,7 +42,11 @@ const auth = (state = initialState, action) => {
         signUpSuccess: "",
         loading: false
       };
-
+    case "AUTH_END_LOADING":
+      return {
+        ...state,
+        loading: false
+      };
     default:
       return state;
   }

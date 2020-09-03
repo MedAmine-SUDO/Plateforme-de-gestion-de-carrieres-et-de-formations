@@ -14,5 +14,9 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
     color: "white"
   },
+  linkMenu:{
+    textDecoration: "none",
+    color: "black"
+  }
 }));
 export { useStyles }

@@ -79,7 +79,9 @@ const NavBar = () => {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <NavLink to="/profile" className={classes.linkMenu}>
+                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                </NavLink>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
               </Menu>
               <Button color="inherit" onClick={handleLogout}>

@@ -9,6 +9,7 @@ export const signUp = (user) => async (dispatch) => {
     dispatch({ type: 'SIGNUP_USER_SUCCESS', payload: res.data });
     return res;
   } catch (err) {
+    dispatch({ type: 'AUTH_END_LOADING' });
     return dispatch({ type: 'SIGNUP_USER_FAILURE', payload: err.response.data });
   }
 };
@@ -19,6 +20,7 @@ export const setCurrentUser = (Cookies, jwtDecode)=> async  (dispatch) => {
     const payload = jwtDecode(Cookies.get('token'));
     dispatch({ type: 'SET_CURRENT_USER_SUCCESS', payload });
   } catch (err) {
+    dispatch({ type: 'AUTH_END_LOADING' });
     dispatch({ type: 'SET_CURRENT_USER_FAILURE', payload: err.response.data })
   }
 }
@@ -32,6 +34,7 @@ export const signIn = (user) => async (dispatch) => {
     dispatch(setCurrentUser(Cookies,jwtDecode))
     return res;
   } catch (err) {
+    dispatch({ type: 'AUTH_END_LOADING' });
     return dispatch({ type: 'SIGNIN_USER_FAILURE', payload: err.response.data })
   }
 };
@@ -40,6 +43,7 @@ export const logoutUser = ()=> async  (dispatch) => {
     dispatch({ type: 'AUTH_LOADING' });
     dispatch({ type: 'LOGOUT_USER_SUCCESS'});
   } catch (err) {
+    dispatch({ type: 'AUTH_END_LOADING' });
     dispatch({ type: 'SET_CURRENT_USER_FAILURE', payload: err.response.data })
   }
 }

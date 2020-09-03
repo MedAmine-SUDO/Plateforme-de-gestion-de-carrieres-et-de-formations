@@ -1,14 +1,13 @@
-package com.example.demo;
+package com.carthageSolution.learningStyleTest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CsUploadRessources1Application {
+public class LearningStyleTestApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CsUploadRessources1Application.class, args);
-		System.out.print("hello world"); 
+		SpringApplication.run(LearningStyleTestApplication.class, args);
 	}
 
 }

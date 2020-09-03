@@ -30,7 +30,7 @@ public class TestController {
     @GetMapping("/create/{nbr}")
     public ResponseEntity<?> saveTest(@PathVariable("nbr") Integer nbrQuestions){
         testService.saveTest(nbrQuestions);
-        return new ResponseEntity("Test added successfully", HttpStatus.OK);
+        return new ResponseEntity("Test created successfully", HttpStatus.OK);
     }
 
     //Get a test by its number

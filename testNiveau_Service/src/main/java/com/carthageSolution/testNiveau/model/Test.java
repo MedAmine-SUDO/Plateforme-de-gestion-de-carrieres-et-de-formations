@@ -2,6 +2,7 @@ package com.carthageSolution.testNiveau.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -15,16 +16,15 @@ public class Test {
     @Id
     private String id_test;
 
-    private Integer numTest;
+    private Long numTest;
     private List<Question> questionList;
     private String userId;
-    private String result;
+    private Integer result;
 
     public Test() {
     }
 
-    public Test(String id_test, Integer numTest, List<Question> questionList, String userId, String result) {
-        this.id_test = id_test;
+    public Test(Long numTest, List<Question> questionList, String userId, Integer result) {
         this.numTest = numTest;
         this.questionList = questionList;
         this.userId = userId;
@@ -39,11 +39,11 @@ public class Test {
         this.id_test = id_test;
     }
 
-    public Integer getNumTest() {
+    public Long getNumTest() {
         return numTest;
     }
 
-    public void setNumTest(Integer numTest) {
+    public void setNumTest(Long numTest) {
         this.numTest = numTest;
     }
 
@@ -63,11 +63,11 @@ public class Test {
         this.userId = userId;
     }
 
-    public String getResult() {
+    public Integer getResult() {
         return result;
     }
 
-    public void setResult(String result) {
+    public void setResult(Integer result) {
         this.result = result;
     }
 

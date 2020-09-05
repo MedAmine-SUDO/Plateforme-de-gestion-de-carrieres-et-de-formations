@@ -2,7 +2,10 @@ package com.example.demo;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
@@ -25,9 +28,14 @@ public class RessourceController {
 private RessourceRepository ressourceRepository;
 @Autowired
 private PhotoService photoService;
+@Autowired
 private VideoService videoService ;
+@Autowired
 private   GridFsTemplate gridFsTemplate;
-
+@Autowired
+private VideoRepository videoRepoSitory;
+@Autowired
+private PhotoRepository photorepository;
 
 @GetMapping("/")
 public List <Ressource> GetRessources(){
@@ -42,7 +50,7 @@ public Ressource GetRessources(@PathVariable String id){
 }
 @PostMapping("/add")
 private Ressource addRessource( @RequestParam("image") MultipartFile image,  
-		  @RequestParam("video") InputStream video, 
+		  @RequestParam("video") MultipartFile video, 
 		 @RequestParam("title") String title,
 		 @RequestParam("description") String description,
 		 @RequestParam("file") String file) throws IOException {
@@ -51,10 +59,10 @@ private Ressource addRessource( @RequestParam("image") MultipartFile image,
 	ressource.setFile(file);
 	ressource.setTitle(title);
 	String idphoto = photoService.addPhoto("Photo",image);
-	ressource.setIdPhoto(idphoto);
+	ressource.addIdPhoto(idphoto);
 	
-	String idvideo = videoService.addVideo("Video",video);
-	ressource.setIdVideo(idvideo);
+	String idvideo = videoService.addVideo("Video", video);
+	ressource.addIdVideo(idvideo);
     
 	return ressourceRepository.save(ressource);
 
@@ -65,11 +73,73 @@ private Ressource PutRessource(@RequestBody Ressource newRessource) {
 	oldRessource.setTitle(newRessource.getTitle());
 	oldRessource.setDescription(newRessource.getDescription());
 	oldRessource.setFile(newRessource.getFile());
+	oldRessource.setIdPhoto(newRessource.getIdPhoto());
+	oldRessource.setIdVideo(newRessource.getIdVideo());
 	return oldRessource;
 }
-@DeleteMapping
+@DeleteMapping("/{id}")
 public String DeleteRessource(@PathVariable String id) {
 	ressourceRepository.deleteById(id);
 	return id;
+}
+@DeleteMapping("/{idV}")
+public String DeleteVideo(@PathVariable String idV ) {
+	videoRepoSitory.deleteById(idV);;
+	return idV;
+}
+@DeleteMapping("/{idp}")
+public String DeletePhoto(@PathVariable String idp ) {
+	photorepository.deleteById(idp);;
+	return idp;
+}
+@GetMapping("/{id}/allVideos")
+public List<Video> GetVideosByRessource(@PathVariable String id) throws IllegalStateException, IOException{
+	Ressource res=ressourceRepository.findById(id).orElse(null);
+	List<String> rest=res.getIdVideo();
+	List <Video> lVideos = new ArrayList<Video>();
+	int i=0;
+	while (!rest.isEmpty()) {
+		String r= rest.get(i);
+		i++;
+		Video v= videoService.getVideo(r);
+		lVideos.add(v);
+		
+	}
+	return lVideos;
+	
+}
+
+@GetMapping("/{id}/allPhotos")
+public List<Photo> GetPhotosByRessource(@PathVariable String id){
+	Ressource res=ressourceRepository.findById(id).orElse(null);
+	List<String> rest=res.getIdPhoto();
+	List <Photo> lPhotos = new ArrayList<Photo>();
+	int i=0;
+	while (!rest.isEmpty()) {
+		String r= rest.get(i);
+		i++;
+		Photo v= photoService.getPhoto(r);
+		lPhotos.add(v);
+		
+	}
+	return lPhotos;
+	
+}
+
+@GetMapping("{idP}")
+public Photo GetPhoto( @PathVariable String idP){
+	
+		Photo v= photoService.getPhoto(idP);
+		
+	return v;
+	
+}
+@GetMapping("{idV}")
+public Video GetVideo( @PathVariable String idV) throws IllegalStateException, IOException{
+	
+		Video p= videoService.getVideo(idV);
+		
+	return p;
+	
 }
 }

@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,14 +22,26 @@ public class Ressource {
 	private String title;
 	private String description;
 	private String file;
-	private String idPhoto;
-	private String idVideo;
-	public String getIdPhoto() {
+	private List <String> idPhoto= new ArrayList<String>();
+	private List <String> idVideo= new ArrayList<String>();
+	
+public List<String> getIdPhoto() {
 		return idPhoto;
 	}
-	public void setIdPhoto(String idPhoto) {
+	public void setIdPhoto(List<String> idPhoto) {
 		this.idPhoto = idPhoto;
 	}
+	public List<String> addIdPhoto(String idpho) {
+		idPhoto.add(idpho);
+
+		return idPhoto;	}
+	
+	//	public String getIdPhoto() {
+//		return idPhoto;
+//	}
+//	public void setIdPhoto(String idPhoto) {
+//		this.idPhoto = idPhoto;
+//	}
 	public String getId() {
 		return id;
 	}
@@ -51,13 +66,18 @@ public class Ressource {
 	public void setFile(String file) {
 		this.file = file;
 	}
-	public String getIdVideo() {
+//	
+	public List<String> getIdVideo() {
 		return idVideo;
 	}
-	
-	public void setIdVideo(String idVideo) {
+	public void setIdVideo(List<String> idVideo) {
 		this.idVideo = idVideo;
 	}
+	public List<String> addIdVideo(String idv) {
+		idVideo.add(idv);
+
+		return idVideo;	}
+	
 	
 	
 

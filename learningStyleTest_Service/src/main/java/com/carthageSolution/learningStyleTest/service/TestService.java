@@ -9,10 +9,10 @@ import java.util.Optional;
 public interface TestService {
     List<Test> findAll();
     Test findByNumTest(Integer num);
-    void saveTest(Integer nbr);
+    void saveTest(Integer nbrQuestions);
     void deleteTest(String id);
     void deleteAll();
     void save(Test test);
-    public Optional<Test> findById(String id);
-    public void updateTest(Test test);
+    Optional<Test> findById(String id);
+    void updateTest(Test test);
 }

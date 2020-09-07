@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { signUp } from "../../actions/AuthActions";
@@ -24,7 +24,7 @@ const SignUp = () => {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [confPassword, setconfPassword] = useState("");
-  const [roles, setroles] = useState(["candidat"]);
+  const [roles] = useState(["candidat"]);
   const [nameErr, setnameErr] = useState("");
   const [emailErr, setemailErr] = useState("");
   const [passwordErr, setpasswordErr] = useState("");
@@ -44,7 +44,8 @@ const SignUp = () => {
   const handleChange = (e, name) => {
     const user = {};
     const emailRegEx = RegExp(
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/
+
     );
     user[name] = e.target.value;
     // validations

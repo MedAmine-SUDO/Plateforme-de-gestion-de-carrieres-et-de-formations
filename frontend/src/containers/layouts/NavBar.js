@@ -30,10 +30,14 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const authDetail = useSelector((state) => state.auth);
   useEffect(() => {
-    if (Cookies.get("token")) {
+    const userCheck = ()=>{
       dispatch(setCurrentUser(Cookies, jwtDecode));
     }
-  }, [authDetail.isAuthenticated]);
+    if (Cookies.get("token")) {
+      userCheck()
+    }
+  }, [dispatch,authDetail.isAuthenticated]);
+
   const handleLogout = () => {
     dispatch(logoutUser());
     Cookies.set("token", "");
@@ -51,7 +55,9 @@ const NavBar = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            News
+            <NavLink to="/" className={classes.link}>
+              Home
+            </NavLink>
           </Typography>
           {authDetail.user ? (
             <>

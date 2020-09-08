@@ -66,7 +66,7 @@ const headerStyle = {
     }
   },
   appResponsive: {
-    margin: "20px 10px"
+    margin: "20px 10px",
   },
   primary: {
     backgroundColor: primaryColor,
@@ -145,6 +145,7 @@ const headerStyle = {
     textAlign: "left",
     paddingRight: "0px",
     paddingLeft: "0",
+    background:"#212121",
     ...transition
   }
 };

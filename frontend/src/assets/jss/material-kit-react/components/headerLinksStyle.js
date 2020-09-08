@@ -111,6 +111,10 @@ const headerLinksStyle = theme => ({
   ...tooltip,
   marginRight5: {
     marginRight: "5px"
+  },
+  link:{
+    textDecoration: "none",
+    color: "white"
   }
 });
 

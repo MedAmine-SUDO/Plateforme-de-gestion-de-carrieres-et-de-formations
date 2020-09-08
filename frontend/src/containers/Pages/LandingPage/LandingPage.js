@@ -3,7 +3,6 @@ import React from "react";
 import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-
 // @material-ui/icons
 
 // core components
@@ -15,7 +14,7 @@ import Button from "../../../components/CustomButtons/Button.js";
 //import HeaderLinks from "../../../components/Header/HeaderLinks.js";
 import Parallax from "../../../components/Parallax/Parallax.js";
 
-import styles from "../../../assets/jss/material-kit-react/views/landingPage"
+import styles from "../../../assets/jss/material-kit-react/views/landingPage";
 // Sections for this page
 import ProductSection from "./Sections/ProductSection.js";
 import TeamSection from "./Sections/TeamSection.js";

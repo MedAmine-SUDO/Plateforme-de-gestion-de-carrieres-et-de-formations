@@ -21,7 +21,7 @@ public class Ressource {
 	private String id;
 	private String title;
 	private String description;
-	private String file;
+	private List <String> idFile= new ArrayList<String>();
 	private List <String> idPhoto= new ArrayList<String>();
 	private List <String> idVideo= new ArrayList<String>();
 	
@@ -60,13 +60,7 @@ public List<String> getIdPhoto() {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getFile() {
-		return file;
-	}
-	public void setFile(String file) {
-		this.file = file;
-	}
-//	
+	
 	public List<String> getIdVideo() {
 		return idVideo;
 	}
@@ -78,6 +72,17 @@ public List<String> getIdPhoto() {
 
 		return idVideo;	}
 	
+	public List<String> getIdFile() {
+		return idFile;
+	}
+	public void setIdFile(List<String> idFile) {
+		this.idFile = idFile;
+	}
+	public List<String> addIdFile(String file) {
+		idFile.add(file);
+		return idFile;
+	}
+
 	
 	
 

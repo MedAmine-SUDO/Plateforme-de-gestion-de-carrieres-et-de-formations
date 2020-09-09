@@ -36,7 +36,10 @@ private   GridFsTemplate gridFsTemplate;
 private VideoRepository videoRepoSitory;
 @Autowired
 private PhotoRepository photorepository;
-
+@Autowired
+private StorageFileRepository storageFileRepository;
+@Autowired
+private StorageService storageFileService;
 @GetMapping("/")
 public List <Ressource> GetRessources(){
 	return ressourceRepository.findAll();
@@ -53,16 +56,18 @@ private Ressource addRessource( @RequestParam("image") MultipartFile image,
 		  @RequestParam("video") MultipartFile video, 
 		 @RequestParam("title") String title,
 		 @RequestParam("description") String description,
-		 @RequestParam("file") String file) throws IOException {
+		 @RequestParam("file") MultipartFile file) throws IOException {
 	Ressource ressource=new Ressource();
 	ressource.setDescription(description);
-	ressource.setFile(file);
+	
 	ressource.setTitle(title);
 	String idphoto = photoService.addPhoto("Photo",image);
 	ressource.addIdPhoto(idphoto);
 	
 	String idvideo = videoService.addVideo("Video", video);
 	ressource.addIdVideo(idvideo);
+	String idfile = storageFileService.addFile("file",file);
+	ressource.addIdFile(idfile);
     
 	return ressourceRepository.save(ressource);
 
@@ -72,7 +77,7 @@ private Ressource PutRessource(@RequestBody Ressource newRessource) {
 	Ressource oldRessource = ressourceRepository.findById(newRessource.getId()).orElse(null);
 	oldRessource.setTitle(newRessource.getTitle());
 	oldRessource.setDescription(newRessource.getDescription());
-	oldRessource.setFile(newRessource.getFile());
+	oldRessource.setIdFile(newRessource.getIdFile());
 	oldRessource.setIdPhoto(newRessource.getIdPhoto());
 	oldRessource.setIdVideo(newRessource.getIdVideo());
 	return oldRessource;

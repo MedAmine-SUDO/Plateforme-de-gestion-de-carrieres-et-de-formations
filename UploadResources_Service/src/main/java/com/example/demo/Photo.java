@@ -18,7 +18,8 @@ public class Photo {
     private String id;
     
     private String title;
-        
+    private Binary image; 
+    
     public Photo(String title) {
 		super();
 		this.title = title;
@@ -48,6 +49,6 @@ public class Photo {
 		this.image = image;
 	}
 
-	private Binary image;
+	
 }
 

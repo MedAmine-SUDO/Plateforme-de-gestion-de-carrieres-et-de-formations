@@ -15,6 +15,7 @@ import Drawer from "@material-ui/core/Drawer";
 import Menu from "@material-ui/icons/Menu";
 // core components
 import styles from "../../assets/jss/material-kit-react/components/headerStyle.js";
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles(styles);
 
@@ -58,9 +59,13 @@ export default function Header(props) {
     [classes.appBar]: true,
     [classes[color]]: color,
     [classes.absolute]: absolute,
-    [classes.fixed]: fixed
+    [classes.fixed]: fixed,
   });
-  const brandComponent = <Button className={classes.title}>{brand}</Button>;
+  const brandComponent = (
+    <NavLink to="/" className={classes.title}> 
+      <Button className={classes.title}>{brand}</Button>
+    </NavLink>
+  );
   return (
     <AppBar className={appBarClasses}>
       <Toolbar className={classes.container}>
@@ -93,7 +98,7 @@ export default function Header(props) {
           anchor={"right"}
           open={mobileOpen}
           classes={{
-            paper: classes.drawerPaper
+            paper: classes.drawerPaper,
           }}
           onClose={handleDrawerToggle}
         >
@@ -108,7 +113,7 @@ export default function Header(props) {
 }
 
 Header.defaultProp = {
-  color: "white"
+  color: "white",
 };
 
 Header.propTypes = {
@@ -121,7 +126,7 @@ Header.propTypes = {
     "transparent",
     "white",
     "rose",
-    "dark"
+    "dark",
   ]),
   rightLinks: PropTypes.node,
   leftLinks: PropTypes.node,
@@ -145,7 +150,7 @@ Header.propTypes = {
       "transparent",
       "white",
       "rose",
-      "dark"
-    ]).isRequired
-  })
+      "dark",
+    ]).isRequired,
+  }),
 };

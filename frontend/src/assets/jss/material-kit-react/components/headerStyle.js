@@ -63,7 +63,8 @@ const headerStyle = {
     "&:hover,&:focus": {
       color: "inherit",
       background: "transparent"
-    }
+    },
+    textDecoration:"none",
   },
   appResponsive: {
     margin: "20px 10px",
@@ -147,7 +148,7 @@ const headerStyle = {
     paddingLeft: "0",
     background:"#212121",
     ...transition
-  }
+  },
 };
 
 export default headerStyle;

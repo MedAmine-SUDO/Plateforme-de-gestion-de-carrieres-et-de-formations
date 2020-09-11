@@ -46,7 +46,7 @@ public class ProfileController {
 			@ApiResponse(code = 404, message = "The resource  not found") })
 	@GetMapping("/{id}")
 	public Profile GetProfile(@PathVariable String id) {
-		return profileRepo.findById(id).orElse(null);
+		return profileRepo.findByUserID(id).orElse(null);
 	}
 
 	@ApiOperation("Add Profile")
@@ -72,7 +72,7 @@ public class ProfileController {
 		oldProfile.setBirthDate(newProfile.getBirthDate());
 		oldProfile.setAddress(newProfile.getAddress());
 		oldProfile.setPostCode(newProfile.getPostCode());
-		oldProfile.setCity(newProfile.getCity());
+		oldProfile.setRegion(newProfile.getRegion());
 		oldProfile.setCountry(newProfile.getCountry());
 		oldProfile.setTelephone(newProfile.getTelephone());
 

@@ -1,5 +1,7 @@
 package com.profiledataservice.tn.models;
 
+import java.util.Date;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -27,7 +29,7 @@ public class Profile {
 	private String lastName;
 	@NotBlank
 	@Size(max = 20)
-	private String birthDate;
+	private Date birthDate;
 	@NotBlank
 	@Size(max = 50)
 	private String address;
@@ -36,7 +38,7 @@ public class Profile {
 	private int postCode;
 	@NotBlank
 	@Size(max = 30)
-	private String city;
+	private String region;
 	@NotBlank
 	@Size(max = 20)
 	private int telephone;
@@ -61,10 +63,10 @@ public class Profile {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getBirthDate() {
+	public Date getBirthDate() {
 		return birthDate;
 	}
-	public void setBirthDate(String birthDate) {
+	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
 	public String getAddress() {
@@ -79,11 +81,11 @@ public class Profile {
 	public void setPostCode(int postCode) {
 		this.postCode = postCode;
 	}
-	public String getCity() {
-		return city;
+	public String getRegion() {
+		return region;
 	}
-	public void setCity(String city) {
-		this.city = city;
+	public void setRegion(String region) {
+		this.region = region;
 	}
 	public int getTelephone() {
 		return telephone;
@@ -106,7 +108,7 @@ public class Profile {
 	@Override
 	public String toString() {
 		return "Profile [id=" + id + ", userID=" + userID + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", birthDate=" + birthDate + ", address=" + address + ", postCode=" + postCode + ", city=" + city
+				+ ", birthDate=" + birthDate + ", address=" + address + ", postCode=" + postCode + ", region=" + region
 				+ ", telephone=" + telephone + ", country=" + country + "]";
 	}
 }

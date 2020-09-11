@@ -6,11 +6,15 @@ import com.example.Competence.Models.Candidat;
 import com.example.Competence.Models.Competence;
 import com.example.Competence.Repositories.CandidatRepository;
 import com.example.Competence.Repositories.CompetenceRepository;
+import org.bson.BsonBinarySubType;
+import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +29,11 @@ public class CandidatController {
     @Autowired
     CompetenceRepository competenceRepository;
 
+
     @PostMapping("")
     public ResponseEntity<Candidat> addCandidat(@RequestBody Candidat candidat){
         try {
-            Candidat c = new Candidat(candidat.getTitle(),candidat.getList());
+            Candidat c = new Candidat(candidat.getTitle());
             List<String> listCandidat ;
             listCandidat = candidat.getList();
 
@@ -60,26 +65,30 @@ public class CandidatController {
     }
 
     @PostMapping("/cv")
-    public ResponseEntity<Candidat> addCandidatfromcv(@RequestBody Candidat candidat){
-        try {
-            Candidat c = new Candidat(candidat.getTitle(),candidat.getList());
-            List<String> list ;
+    public ResponseEntity<Candidat> addCandidatfromcv(@RequestParam("title") String title,
+                                                      @RequestParam("file") MultipartFile file) throws IOException {
+
+
+            //String id = cvService.addCV(title,file);
+            Candidat c = new Candidat(title);
+            c.setFile(new Binary(BsonBinarySubType.BINARY, file.getBytes()));
+
             CvReader cvReader = new CvReader();
-            list=cvReader.readCV("/home/jabrane/Desktop/info1/Cv/cv_fr_medamine.pdf");
+            List<String> list = cvReader.readCV(file);
             c.setList(list);
-            c.setTitle("aminoss");
 
             Candidat c_ = candidatRepository.save(c);
-            return new ResponseEntity<>(c_, HttpStatus.CREATED);
-        }catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
 
+            return new ResponseEntity<>(c_, HttpStatus.CREATED);
     }
     @GetMapping("")
     public List<Candidat> getCandidat(){
         List<Candidat> list = new ArrayList<>();
         candidatRepository.findAll().forEach(list::add);
         return list;
+    }
+    @DeleteMapping("")
+    public void deleteAll(){
+        candidatRepository.deleteAll();
     }
 }

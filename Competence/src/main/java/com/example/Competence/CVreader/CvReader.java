@@ -1,44 +1,71 @@
 package com.example.Competence.CVreader;
 
-import com.example.Competence.Components.CompetenceRepositoryImpl;
-import com.example.Competence.Controllers.CompetenceController;
 import com.example.Competence.CsvToMongo.CsvToMongo;
-import com.example.Competence.Models.Competence;
-import com.example.Competence.Repositories.CompetenceRepository;
-import com.example.Competence.Services.CompetenceService;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.core.io.ClassPathResource;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+
 import java.util.*;
+
+
+
 
 
 public class CvReader {
 
-    @Autowired
-    CompetenceRepositoryImpl competenceRepository;
-    public List<String> readCV(String url) {
+
+
+    // method to convert Mutipartfile to a File
+
+    public  File convert(MultipartFile file) throws IOException {
+        File convFile = new File(file.getOriginalFilename());
+        convFile.createNewFile();
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(file.getBytes());
+        fos.close();
+        return convFile;
+    }
+
+
+
+    public List<String> readCV(MultipartFile pdfFile) {
 
         //read pdf file
 
         PDDocument pd;
         BufferedWriter wr;
         try {
-            File input = new File(url);  // The PDF file from where you would like to extract
-            File output = new File("/home/jabrane/Desktop/info1/Cv/res.txt"); // The text file where you are going to store the extracted data
-            pd = PDDocument.load(input);
+
+            // The PDF file from where you would like to extract
+            File pdf;
+            pdf = this.convert(pdfFile);
+
+
+            // The text file where you are going to store the extracted data (select file)
+
+            File file = new ClassPathResource("res.txt").getFile();
+
+
+            //load the pdf file
+
+            pd = PDDocument.load(pdf);
             System.out.println(pd.getNumberOfPages());
             System.out.println(pd.isEncrypted());
             pd.save("CopyOfBill.pdf"); // Creates a copy called "CopyOfInvoice.pdf"
             PDFTextStripper stripper = new PDFTextStripper();
             stripper.setStartPage(1); //Start extracting from page 3
             stripper.setEndPage(1); //Extract till page 5
-            wr = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output)));
+
+            //write data in res.txt
+
+            wr = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
             stripper.writeText(pd, wr);
             if (pd != null) {
                 pd.close();
@@ -53,12 +80,27 @@ public class CvReader {
 
         String[] words;
         String content = "";
-        String path = "/home/jabrane/Desktop/info1/Cv/res.txt";
+
+
+        try {
+
+           //read res.txt and extract data (read)
+            File file = new ClassPathResource("res.txt").getFile();
+            content = new String(Files.readAllBytes(file.toPath()));
+
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+      /* //String path = "/home/jabrane/Desktop/info1/Cv/res.txt";
         try {
             content = Files.readString(Paths.get(path));
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
+
+
         words = content.split(" ");
         ArrayList<String> compList = new ArrayList<>(Arrays.asList(words)); //the list of words
 

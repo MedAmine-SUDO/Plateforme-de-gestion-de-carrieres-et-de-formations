@@ -1,6 +1,7 @@
 package com.example.Competence.Models;
 
 
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,10 +15,19 @@ public class Candidat {
 
     private String title;
     private List<String> list;
+    private Binary file;
 
-    public Candidat(String title, List<String> list) {
+    public Binary getFile() {
+        return file;
+    }
+
+    public void setFile(Binary file) {
+        this.file = file;
+    }
+
+    public Candidat(String title) {
         this.title = title;
-        this.list = list;
+
     }
 
     public String getId() {

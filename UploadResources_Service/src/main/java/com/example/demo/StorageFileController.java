@@ -34,7 +34,7 @@ public class StorageFileController {
 		return storageService.getAll();
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/file/{id}")
 	public String getPhoto(@PathVariable String id, Model model) {
 
 		StorageFile photo = storageService.getFile(id);

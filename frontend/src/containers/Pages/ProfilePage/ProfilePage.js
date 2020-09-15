@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // @material-ui/core components
@@ -29,10 +30,39 @@ import work4 from "../../../assets/img/examples/mariya-georgieva.jpg";
 import work5 from "../../../assets/img/examples/clem-onojegaw.jpg";
 
 import styles from "../../../assets/jss/material-kit-react/views/profilePage.js";
+import { profileGetData } from "../../../actions/ProfileActions";
 
 const useStyles = makeStyles(styles);
 
 export default function ProfilePage() {
+  const profileData = useSelector((state) => state.profile);
+  const authDetail = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
+  const [firstName, setfirstName] = useState("");
+  const [lastName, setlastName] = useState("");
+  const [birthDate, setBirthDate] = useState(new Date("2000-01-01"));
+  const [telephone, settelephone] = useState("");
+  const [address, setaddress] = useState("");
+  const [postCode, setpostCode] = useState("");
+  const [country, setcountry] = useState("");
+  const [region, setregion] = useState("");
+
+  useEffect(() => {
+    if (authDetail.user && !profileData.data) {
+      dispatch(profileGetData(authDetail.user.id));
+    }
+    if (profileData.data) {
+      setfirstName(profileData.data.firstName);
+      setlastName(profileData.data.lastName);
+      setBirthDate(new Date(profileData.data.birthDate));
+      settelephone(profileData.data.telephone);
+      setaddress(profileData.data.address);
+      setpostCode(profileData.data.postCode);
+      setcountry(profileData.data.country);
+      setregion(profileData.data.region);
+    }
+  }, [profileData.data,authDetail.user]);
   const classes = useStyles();
   const imageClasses = classNames(
     classes.imgRaised,
@@ -42,7 +72,11 @@ export default function ProfilePage() {
   const navImageClasses = classNames(classes.imgRounded, classes.imgGallery);
   return (
     <div>
-      <Parallax small filter image={require("../../../assets/img/profile-bg.jpg")} />
+      <Parallax
+        small
+        filter
+        image={require("../../../assets/img/profile-bg.jpg")}
+      />
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div>
           <div className={classes.container}>
@@ -53,7 +87,11 @@ export default function ProfilePage() {
                     <img src={profile} alt="..." className={imageClasses} />
                   </div>
                   <div className={classes.name}>
-                    <h3 className={classes.title}>Christian Louboutin</h3>
+                    <h3 className={classes.title}>
+                      {profileData.data
+                        ? firstName + " " + lastName
+                        : "michou mawjoud"}
+                    </h3>
                     <h6>DESIGNER</h6>
                     <Button justIcon link className={classes.margin5}>
                       <i className={"fab fa-twitter"} />
@@ -112,7 +150,7 @@ export default function ProfilePage() {
                             />
                           </GridItem>
                         </GridContainer>
-                      )
+                      ),
                     },
                     {
                       tabButton: "Work",
@@ -149,7 +187,7 @@ export default function ProfilePage() {
                             />
                           </GridItem>
                         </GridContainer>
-                      )
+                      ),
                     },
                     {
                       tabButton: "Favorite",
@@ -186,8 +224,8 @@ export default function ProfilePage() {
                             />
                           </GridItem>
                         </GridContainer>
-                      )
-                    }
+                      ),
+                    },
                   ]}
                 />
               </GridItem>

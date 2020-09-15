@@ -12,7 +12,11 @@ public interface TestService {
     Test findByNumTest(Long num);
     List<Test> findByUserId(String userId);
     Optional<Test> findById(String id);
+<<<<<<< HEAD
+    Test saveTest();
+=======
     void saveTest();
+>>>>>>> 8f133aef5598cab05f12a756f6194ce2b6f7551b
     void save(Test test);
     void deleteTest(String id);
     void deleteAll();

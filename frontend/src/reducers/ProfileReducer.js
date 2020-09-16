@@ -20,6 +20,8 @@ const profile = (state = initialState, action) => {
         ...state,
         loading: false,
       };
+    case "CLEAR_PROFILE":
+      return { ...state, data: null, profileErr: "", loading: false };
     default:
       return state;
   }

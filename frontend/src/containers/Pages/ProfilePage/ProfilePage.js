@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // nodejs library that concatenates classes
 import classNames from "classnames";
@@ -8,6 +8,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Camera from "@material-ui/icons/Camera";
 import Palette from "@material-ui/icons/Palette";
 import Favorite from "@material-ui/icons/Favorite";
+import FacebookIcon from "@material-ui/icons/Facebook";
+import LinkedInIcon from "@material-ui/icons/LinkedIn";
+import InstagramIcon from "@material-ui/icons/Instagram";
 // core components
 import Footer from "../../../components/Footer/Footer.js";
 import Button from "../../../components/CustomButtons/Button.js";
@@ -31,6 +34,7 @@ import work5 from "../../../assets/img/examples/clem-onojegaw.jpg";
 
 import styles from "../../../assets/jss/material-kit-react/views/profilePage.js";
 import { profileGetData } from "../../../actions/ProfileActions";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles(styles);
 
@@ -41,7 +45,7 @@ export default function ProfilePage() {
   const dispatch = useDispatch();
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
-  const [birthDate, setBirthDate] = useState(new Date("2000-01-01"));
+  const [birthDate, setBirthDate] = useState(new Date("2000-01-01").getDate().toString());
   const [telephone, settelephone] = useState("");
   const [address, setaddress] = useState("");
   const [postCode, setpostCode] = useState("");
@@ -55,14 +59,14 @@ export default function ProfilePage() {
     if (profileData.data) {
       setfirstName(profileData.data.firstName);
       setlastName(profileData.data.lastName);
-      setBirthDate(new Date(profileData.data.birthDate));
+      setBirthDate(new Date(profileData.data.birthDate).toDateString());
       settelephone(profileData.data.telephone);
       setaddress(profileData.data.address);
       setpostCode(profileData.data.postCode);
       setcountry(profileData.data.country);
       setregion(profileData.data.region);
     }
-  }, [profileData.data,authDetail.user]);
+  }, [profileData.data, authDetail.user,dispatch]);
   const classes = useStyles();
   const imageClasses = classNames(
     classes.imgRaised,
@@ -87,21 +91,31 @@ export default function ProfilePage() {
                     <img src={profile} alt="..." className={imageClasses} />
                   </div>
                   <div className={classes.name}>
-                    <h3 className={classes.title}>
-                      {profileData.data
-                        ? firstName + " " + lastName
-                        : "michou mawjoud"}
-                    </h3>
-                    <h6>DESIGNER</h6>
-                    <Button justIcon link className={classes.margin5}>
-                      <i className={"fab fa-twitter"} />
-                    </Button>
-                    <Button justIcon link className={classes.margin5}>
-                      <i className={"fab fa-instagram"} />
-                    </Button>
-                    <Button justIcon link className={classes.margin5}>
-                      <i className={"fab fa-facebook"} />
-                    </Button>
+                    {profileData.data ? (
+                      <>
+                        <h3 className={classes.title}>
+                          {firstName + " " + lastName}
+                        </h3><br />
+                        Date of Birth :<strong>{birthDate}</strong><br />
+                        Telephone :<strong>{telephone}</strong><br />
+                        Address :<strong>{address}</strong><br />
+                        Post Code :<strong>{postCode}</strong><br />
+                        Country :<strong>{country}</strong><br />
+                        Region :<strong>{region}</strong><br />
+                        <Button justIcon link className={classes.margin5}>
+                          <InstagramIcon color="primary" />
+                        </Button>
+                        <Button justIcon link className={classes.margin5}>
+                          <LinkedInIcon color="primary" />
+                        </Button>
+                        <Button justIcon link className={classes.margin5}>
+                          <FacebookIcon color="primary" />
+                        </Button>
+                      </>
+                    ) : (profileData.loading ?
+                      <CircularProgress /> : 
+                      "Go to settings"
+                    )}
                   </div>
                 </div>
               </GridItem>

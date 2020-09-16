@@ -48,8 +48,11 @@ export const logoutUser = () => async (dispatch) => {
   try {
     dispatch({ type: "AUTH_LOADING" });
     dispatch({ type: "LOGOUT_USER_SUCCESS" });
+    dispatch({ type: "PROFILE_LOADING" });
+    dispatch({ type: "CLEAR_PROFILE" });
   } catch (err) {
     dispatch({ type: "AUTH_END_LOADING" });
+    dispatch({ type: "PROFILE_END_LOADING" });
     dispatch({ type: "SET_CURRENT_USER_FAILURE", payload: err.response.data });
   }
 };

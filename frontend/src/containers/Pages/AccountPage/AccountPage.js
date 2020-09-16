@@ -165,7 +165,7 @@ function AccountPage() {
           <div className={classes.container}>
             <GridContainer justify="center">
               <GridItem xs={12} sm={12}>
-                {authDetail.loading || profileData.loading ? (
+                {profileData.loading ? (
                   <CircularProgress />
                 ) : (
                   <NavPills

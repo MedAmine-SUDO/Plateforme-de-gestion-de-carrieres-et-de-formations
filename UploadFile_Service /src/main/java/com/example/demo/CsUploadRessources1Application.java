@@ -9,7 +9,7 @@ public class CsUploadRessources1Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CsUploadRessources1Application.class, args);
-		System.out.print("hello world"); 
+		System.out.print("hello world from file upload");
 	}
 
 }

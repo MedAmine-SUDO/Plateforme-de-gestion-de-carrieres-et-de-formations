@@ -13,24 +13,24 @@ public class Competence {
     @Id
     private String id;
 
-    private String title;
-    private List<String> dataset;
+    private String title; //Nom du dataset
+    private List<String> dataset; // dataset de tous les competences sous la forme d'une list
     public String getTitle() {
 
         return title;
 
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-
-
-
+    //Constructor
     public Competence( String title, List<String> dataset) {
 
         this.dataset = dataset;
+        this.title = title;
+    }
+
+    //getters and setters
+
+    public void setTitle(String title) {
         this.title = title;
     }
 

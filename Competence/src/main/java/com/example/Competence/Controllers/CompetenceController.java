@@ -24,6 +24,10 @@ public class CompetenceController {
 
     @Autowired
     CompetenceRepository competenceRepository;
+
+    // add new dataset
+    // Only do this once !!!!
+
     @PostMapping("/areYouSure?")
     public ResponseEntity<Competence> createCompetence(@RequestBody Competence competence){
         try {
@@ -35,6 +39,9 @@ public class CompetenceController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    // fill the database with all Competences from a csv file
 
     @PostMapping("/csvTomongo")
     public ResponseEntity<Competence> createCompetence1(@RequestBody Competence competence){
@@ -52,12 +59,17 @@ public class CompetenceController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    // list all the Competences in the database
+
     @GetMapping("")
     public List<Competence> getCompetence(){
         List<Competence> list = new ArrayList<>();
         competenceRepository.findAll().forEach(list::add);
         return list;
     }
+
+    //update the dataset
 
     @PutMapping("/{id}")
     public Competence updateCompetence(@PathVariable("id") String id,@RequestBody Competence competence){
@@ -69,10 +81,14 @@ public class CompetenceController {
            return competenceRepository.save(c_);
     }
 
+    // delete by id
+
     @DeleteMapping("/{id}")
     public void deleteCompetence(@PathVariable("id") String id){
         competenceRepository.deleteById(id);
     }
+
+    // delete all data
 
     @DeleteMapping("")
     public void deleteAll(){

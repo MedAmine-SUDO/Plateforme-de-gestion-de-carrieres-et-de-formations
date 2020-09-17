@@ -29,6 +29,7 @@ public class CandidatController {
     @Autowired
     CompetenceRepository competenceRepository;
 
+    // add new candidat
 
     @PostMapping("")
     public ResponseEntity<Candidat> addCandidat(@RequestBody Candidat candidat){
@@ -64,29 +65,34 @@ public class CandidatController {
 
     }
 
+    //add new candidate from his resume(cv)
+
     @PostMapping("/cv")
     public ResponseEntity<Candidat> addCandidatfromcv(@RequestParam("title") String title,
                                                       @RequestParam("file") MultipartFile file) throws IOException {
 
 
-            //String id = cvService.addCV(title,file);
+
             Candidat c = new Candidat(title);
             c.setFile(new Binary(BsonBinarySubType.BINARY, file.getBytes()));
-
+            //call the detection algorithm
             CvReader cvReader = new CvReader();
             List<String> list = cvReader.readCV(file);
-            c.setList(list);
 
+            c.setList(list);
             Candidat c_ = candidatRepository.save(c);
 
             return new ResponseEntity<>(c_, HttpStatus.CREATED);
     }
+
+    // get a list of all the candidates
     @GetMapping("")
     public List<Candidat> getCandidat(){
         List<Candidat> list = new ArrayList<>();
         candidatRepository.findAll().forEach(list::add);
         return list;
     }
+    //delete all candidates
     @DeleteMapping("")
     public void deleteAll(){
         candidatRepository.deleteAll();

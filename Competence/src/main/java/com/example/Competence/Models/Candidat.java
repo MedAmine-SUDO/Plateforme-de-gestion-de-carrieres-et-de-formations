@@ -10,12 +10,23 @@ import java.util.List;
 @Document(collection ="Competence_Candidat")
 public class Candidat {
 
+
     @Id
     private String id;
 
-    private String title;
-    private List<String> list;
-    private Binary file;
+    private String title; //nom du candidat
+    private List<String> list; //List des Competences du candidat
+    private Binary file; // le CV du Candidat en format pdf
+
+
+    //Constructor
+
+    public Candidat(String title) {
+        this.title = title;
+
+    }
+
+    //getters and setters
 
     public Binary getFile() {
         return file;
@@ -25,10 +36,7 @@ public class Candidat {
         this.file = file;
     }
 
-    public Candidat(String title) {
-        this.title = title;
 
-    }
 
     public String getId() {
         return id;

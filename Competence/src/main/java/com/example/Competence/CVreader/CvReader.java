@@ -16,14 +16,9 @@ import java.util.*;
 
 
 
-
-
 public class CvReader {
 
-
-
-    // method to convert Mutipartfile to a File
-
+    //convert Mutipartfile to a File
     public  File convert(MultipartFile file) throws IOException {
         File convFile = new File(file.getOriginalFilename());
         convFile.createNewFile();
@@ -34,7 +29,7 @@ public class CvReader {
     }
 
 
-
+    //detect all the competences from a candidate's resme
     public List<String> readCV(MultipartFile pdfFile) {
 
         //read pdf file
@@ -44,14 +39,14 @@ public class CvReader {
         try {
 
             // The PDF file from where you would like to extract
+
             File pdf;
             pdf = this.convert(pdfFile);
 
-
             // The text file where you are going to store the extracted data (select file)
+            // the file is stored in the resources package
 
             File file = new ClassPathResource("res.txt").getFile();
-
 
             //load the pdf file
 
@@ -105,18 +100,24 @@ public class CvReader {
         ArrayList<String> compList = new ArrayList<>(Arrays.asList(words)); //the list of words
 
 
-        //read dataset of all computer skills
+        //read dataset of all computer skills from csv file
         //convert csv file into list
 
+        /*
         CsvToMongo csvToMongo = new CsvToMongo();
         List<String> allComp ;
         allComp = csvToMongo.csvToList();
+        */
 
         //read Dataset from mongodb
 
-       /*List<String> allComp ;
-       allComp = competenceRepository.getdataset();*/
+        CsvToMongo csvToMongo = new CsvToMongo();
+        List<String> allComp ;
+        allComp = csvToMongo.mongoToList();
 
+        for (String comp: allComp){
+            System.out.println(comp);
+        }
 
 
 

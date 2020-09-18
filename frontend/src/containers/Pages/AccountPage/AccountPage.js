@@ -29,7 +29,7 @@ function AccountPage() {
   const classes = useStyles();
 
   const [id, setId] = useState("");
-    const [userID, setUserID] = useState("");
+  const [userID, setUserID] = useState("");
 
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
@@ -44,6 +44,7 @@ function AccountPage() {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const isFirstRun = useRef(true);
+
   useEffect(() => {
     if (authDetail.user) {
       setUserID(authDetail.user.id)
@@ -56,8 +57,8 @@ function AccountPage() {
       dispatch(profileGetData(userID));
     }
   }, [authDetail,userID, dispatch]);
-  useEffect(() => {
 
+  useEffect(() => {
     if (profileData.data) {
       setId(profileData.data.id)
       setfirstName(profileData.data.firstName);
@@ -70,6 +71,7 @@ function AccountPage() {
       setregion(profileData.data.region);
     }
   }, [profileData.data]);
+
   const handleChange = (e, name) => {
     const user = {};
     if (name === "country" || name === "region" || name === "birthDate")

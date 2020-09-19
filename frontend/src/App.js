@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Switch, Redirect , Route } from "react-router-dom";
+import { Switch, Redirect, Route } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import NavBar from "./containers/layouts/NavBar";
 import AkremRoutes from "./containers/routes/AkremRoutes";
@@ -13,9 +13,9 @@ import SignIn from "./containers/auth/SignIn";
 
 function App() {
   const authDetail = useSelector((state) => state.auth);
-  if(!authDetail.user)
-  return (
-    <div className="App">
+  if (!authDetail.user)
+    return (
+      <div className="App">
         <CssBaseline />
         <nav>
           <NavBar />
@@ -26,8 +26,8 @@ function App() {
           <Redirect to={"/signin"} />
         </Switch>
       </div>
-  );
-  else if (authDetail.user.roles[0]==="ROLE_ADMIN")
+    );
+  else if (authDetail.user.roles[0] === "ROLE_ADMIN")
     return (
       <div className="App">
         <AdminDashboard />

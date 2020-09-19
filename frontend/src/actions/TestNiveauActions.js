@@ -14,3 +14,9 @@ export const testNiveauDeleteQuestion = (idQuestion) => async (dispatch) => {
     const res = await apiCalltestNiveau("/question/"+idQuestion, "delete");
     return res;
 }
+
+export const testNiveauUpdateQuestion = (idQuestion, question) => async (dispatch) => {
+    const res = await apiCalltestNiveau("/question/"+idQuestion, "put", question);
+    return res;
+}
+

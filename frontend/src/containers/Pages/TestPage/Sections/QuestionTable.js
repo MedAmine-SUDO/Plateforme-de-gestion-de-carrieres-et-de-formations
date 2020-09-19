@@ -165,8 +165,8 @@ export default function QuestionTable() {
   }
 
   useEffect(() => {
-    dispatch(testNiveauGetQuestions()).then((res) => {
-      res.data.map(question => {
+    dispatch(testNiveauGetQuestions()).then(res => {
+      res.data.foreach(question => {
         let newQuestion = {
           id: "",
           questionNbr: "",
@@ -209,10 +209,11 @@ export default function QuestionTable() {
           data.push(newQuestion);
           return { ...prevState, data };
         });
+        
       })
 
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <MaterialTable

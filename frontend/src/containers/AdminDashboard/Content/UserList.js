@@ -1,60 +1,109 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Tooltip from '@material-ui/core/Tooltip';
-import IconButton from '@material-ui/core/IconButton';
-import { withStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
-import RefreshIcon from '@material-ui/icons/Refresh';
-import { stylesContent } from "../styles/Styles"
+import React, { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getAllUsers } from "../../../actions/AuthActions";
+import MaterialTable from "material-table";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import { stylesContent } from "../styles/Styles";
+import { tableIcons } from "../../tableFeatures/tableIcons";
+import NavPills from "../../../components/NavPills/NavPills.js";
+import Dashboard from "@material-ui/icons/Dashboard";
+import Schedule from "@material-ui/icons/Schedule";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 function UserList(props) {
-  const { classes } = props;
-
-  return (
-    <Paper className={classes.paper}>
-      <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
-        <Toolbar>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item>
-              <SearchIcon className={classes.block} color="inherit" />
-            </Grid>
-            <Grid item xs>
-              <TextField
-                fullWidth
-                placeholder="Search by email address, phone number, or user UID"
-                InputProps={{
-                  disableUnderline: true,
-                  className: classes.searchInput,
-                }}
-              />
-            </Grid>
-            <Grid item>
-              <Button variant="contained" color="primary" className={classes.addUser}>
-                Add user
-              </Button>
-              <Tooltip title="Reload">
-                <IconButton>
-                  <RefreshIcon className={classes.block} color="inherit" />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-          </Grid>
-        </Toolbar>
-      </AppBar>
-      <div className={classes.contentWrapper}>
-        <Typography color="textSecondary" align="center">
-          No users for this project yet
-        </Typography>
-      </div>
-    </Paper>
-  );
+  const dispatch = useDispatch();
+  const authDetail = useSelector((state) => state.auth);
+  const [state, setState] = useState({
+    columns: [
+      { title: "ID", field: "id" },
+      { title: "Username", field: "username" },
+      // { title: "Role", field: "roles" },
+      { title: "Email", field: "email" },
+      { title: "Password", field: "password" },
+    ],
+    data: [],
+  });
+  useEffect(() => {
+    dispatch(getAllUsers()).then((res) => {
+      if(res)
+      setState(
+        {
+          columns:state.columns,
+          data:res.data
+        }
+      );
+    });
+  }, []);
+  if (authDetail.loading) return <CircularProgress />;
+  else
+    return (
+      <NavPills
+        color="adminDashboard"
+        tabs={[
+          {
+            tabButton: "Users List",
+            tabIcon: Dashboard,
+            tabContent: (
+              <>
+                <MaterialTable
+                  title="Users List"
+                  columns={state.columns}
+                  data={state.data}
+                  icons={tableIcons}
+                  editable={{
+                    onRowAdd: (newData) =>
+                      new Promise((resolve) => {
+                        setTimeout(() => {
+                          resolve();
+                          setState((prevState) => {
+                            const data = [...prevState.data];
+                            data.push(newData);
+                            return { ...prevState, data };
+                          });
+                        }, 600);
+                      }),
+                    onRowUpdate: (newData, oldData) =>
+                      new Promise((resolve) => {
+                        setTimeout(() => {
+                          resolve();
+                          if (oldData) {
+                            setState((prevState) => {
+                              const data = [...prevState.data];
+                              data[data.indexOf(oldData)] = newData;
+                              return { ...prevState, data };
+                            });
+                          }
+                        }, 600);
+                      }),
+                    onRowDelete: (oldData) =>
+                      new Promise((resolve) => {
+                        setTimeout(() => {
+                          resolve();
+                          setState((prevState) => {
+                            const data = [...prevState.data];
+                            data.splice(data.indexOf(oldData), 1);
+                            return { ...prevState, data };
+                          });
+                        }, 600);
+                      }),
+                  }}
+                />
+              </>
+            ),
+          },
+          {
+            tabButton: "Account Settings",
+            tabIcon: Schedule,
+            tabContent: (
+              <>
+                <h1>blabla</h1>
+              </>
+            ),
+          },
+        ]}
+      />
+    );
 }
 
 UserList.propTypes = {

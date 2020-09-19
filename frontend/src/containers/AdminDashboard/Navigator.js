@@ -26,7 +26,7 @@ const defaultCategories = [
     id: "Develop",
     children: [
       {
-        id: "Authentication",
+        id: "Users List",
         icon: <PeopleIcon />,
         link: "/admin_dashboard/users",
       },
@@ -72,7 +72,7 @@ function Navigator(props) {
       id: "Develop",
       children: [
         {
-          id: "Authentication",
+          id: "Users List",
           icon: <PeopleIcon />,
           link: "/admin_dashboard/users",
           active:true

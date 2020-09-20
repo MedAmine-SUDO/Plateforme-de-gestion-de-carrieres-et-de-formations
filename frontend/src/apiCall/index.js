@@ -20,6 +20,15 @@ const apiCallProfile = (url, method, body = {}, token = '') => axios({
   }
 });
 
+const apiCallFormation = (url, method, body = {}, token = '') => axios({
+  method,
+  url: `http://localhost:8083/api/profile${url}`,
+  data: body,
+  headers: {
+    ...composeToken(token)
+  }
+});
+
 const apiCalltestNiveau = (url, method, body = {}, token = '') => axios({
   method,
   url: `http://localhost:8089/api/testNiveau${url}`,
@@ -30,4 +39,4 @@ const apiCalltestNiveau = (url, method, body = {}, token = '') => axios({
 });
 
 
-export {apiCallAuth , apiCallProfile, apiCalltestNiveau };
+export {apiCallAuth , apiCallProfile, apiCallFormation, apiCalltestNiveau };

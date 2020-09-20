@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllUsers } from "../../../actions/AuthActions";
+import { getAllUsers, signUp, deleteUser } from "../../../actions/AuthActions";
 import MaterialTable from "material-table";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -13,16 +13,13 @@ import Warning from "@material-ui/icons/Warning";
 import Check from "@material-ui/icons/Check";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SnackbarContent from "../../../components/Snackbar/SnackbarContent.js";
-import { signUp } from "../../../actions/AuthActions";
 
 function UserList(props) {
   const dispatch = useDispatch();
   const authDetail = useSelector((state) => state.auth);
   const [alert, setAlert] = useState(null);
-  const [empty, setEmpty] = useState(null);
-  const [roleErr, setRoleErr] = useState(null);
-  const [addSuccess, setAddSuccess] = useState(null);
-  const [badRequest, setBadRequest] = useState(null);
+  const [alertAdd, setalertAdd] = useState(null);
+  const [alertDelete, setalertDelete] = useState(null);
 
   const [state, setState] = useState({
     columns: [
@@ -35,16 +32,14 @@ function UserList(props) {
     data: [],
   });
   useEffect(() => {
-    dispatch(getAllUsers())
-      .then((res) => {
-        if (res)
-          setState({
-            columns: state.columns,
-            data: res.data,
-          });
+    dispatch(getAllUsers()).then((res) => {
+      if (res) {
+        setState({
+          columns: state.columns,
+          data: res.data,
+        });
         setAlert(null);
-      })
-      .catch((err) => {
+      } else
         setAlert(
           <SnackbarContent
             message={
@@ -57,21 +52,18 @@ function UserList(props) {
             icon={Warning}
           />
         );
-      });
-  }, [dispatch, addSuccess , state.columns]);
+    });
+  }, [dispatch, state.columns]);
   const addUser = (newData) => {
-    setEmpty(null);
-    setAddSuccess(null);
     setAlert(null);
-    setRoleErr(null);
-    setBadRequest(null);
+    setalertDelete(null)
     if (
       !newData.username ||
       !newData.email ||
       !newData.password ||
       !newData.roles
     ) {
-      setEmpty(
+      setalertAdd(
         <SnackbarContent
           message={
             <span>
@@ -88,7 +80,7 @@ function UserList(props) {
         newData.roles[0].name
       )
     ) {
-      setRoleErr(
+      setalertAdd(
         <SnackbarContent
           message={
             <span>
@@ -109,7 +101,7 @@ function UserList(props) {
       dispatch(signUp({ username, email, password, roles }))
         .then((res) => {
           if (res.type === "SIGNUP_USER_FAILURE")
-            setBadRequest(
+          setalertAdd(
               <SnackbarContent
                 message={
                   <span>
@@ -122,21 +114,21 @@ function UserList(props) {
               />
             );
           else
-          setAddSuccess(
-            <SnackbarContent
-              message={
-                <span>
-                  <b>SUCCESS ALERT:</b> User Added...
-                </span>
-              }
-              close
-              color="success"
-              icon={Check}
-            />
-          );
+          setalertAdd(
+              <SnackbarContent
+                message={
+                  <span>
+                    <b>SUCCESS ALERT:</b> User Added...
+                  </span>
+                }
+                close
+                color="success"
+                icon={Check}
+              />
+            );
         })
         .catch((err) => {
-          setAlert(
+          setalertAdd(
             <SnackbarContent
               message={
                 <span>
@@ -151,15 +143,45 @@ function UserList(props) {
         });
     }
   };
+  const deleteOneUser = (oldData) => {
+    dispatch(deleteUser(oldData.id)).then((res) => {
+      setAlert(null);
+      setalertAdd(null)
+      if (res)
+      setalertDelete(
+          <SnackbarContent
+            message={
+              <span>
+                <b>SUCCESS ALERT:</b> User Deleted...
+              </span>
+            }
+            close
+            color="success"
+            icon={Check}
+          />
+        );
+      else
+      setalertDelete(
+          <SnackbarContent
+            message={
+              <span>
+                <b>WARNING ALERT:</b> Server ERROR...
+              </span>
+            }
+            close
+            color="warning"
+            icon={Warning}
+          />
+        );
+    });
+  };
   if (authDetail.loading) return <CircularProgress />;
   else
     return (
       <>
         {alert}
-        {empty}
-        {roleErr}
-        {addSuccess}
-        {badRequest}
+        {alertAdd}
+        {alertDelete}
         <NavPills
           color="adminDashboard"
           tabs={[
@@ -181,14 +203,8 @@ function UserList(props) {
                         }),
                       onRowDelete: (oldData) =>
                         new Promise((resolve) => {
-                          setTimeout(() => {
-                            resolve();
-                            setState((prevState) => {
-                              const data = [...prevState.data];
-                              data.splice(data.indexOf(oldData), 1);
-                              return { ...prevState, data };
-                            });
-                          }, 600);
+                          resolve();
+                          deleteOneUser(oldData);
                         }),
                     }}
                   />

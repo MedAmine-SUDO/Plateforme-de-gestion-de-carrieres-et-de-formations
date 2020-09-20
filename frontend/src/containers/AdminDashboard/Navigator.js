@@ -25,19 +25,19 @@ const defaultCategories = [
     id: "Develop",
     children: [
       {
-        id: "Users List",
+        id: "Users",
         icon: <PeopleIcon />,
         link: "/admin_dashboard/users",
       },
       {
-        id: "Database",
+        id: "Tests",
         icon: <DnsRoundedIcon />,
         link: "/admin_dashboard/tests",
       },
       {
-        id: "Storage",
+        id: "Formations",
         icon: <PermMediaOutlinedIcon />,
-        link: "/admin_dashboard",
+        link: "/admin_dashboard/formations",
       },
       { id: "Hosting", icon: <PublicIcon />, link: "/admin_dashboard" },
       {
@@ -74,7 +74,6 @@ function Navigator(props) {
           id: "Users List",
           icon: <PeopleIcon />,
           link: "/admin_dashboard/users",
-          active:true
         },
         {
           id: "Database",
@@ -82,9 +81,9 @@ function Navigator(props) {
           link: "/admin_dashboard/tests",
         },
         {
-          id: "Storage",
+          id: "Formations",
           icon: <PermMediaOutlinedIcon />,
-          link: "/admin_dashboard",
+          link: "/admin_dashboard/formations",
         },
         { id: "Hosting", icon: <PublicIcon />, link: "/admin_dashboard" },
         {
@@ -167,7 +166,12 @@ function Navigator(props) {
                 className={clsx(classes.link, active && classes.itemActiveItem)}
                 onClick={() => handleNavigation(id, childId)}
               >
-                <ListItem className={clsx(classes.item, active && classes.itemActiveItem)}>
+                <ListItem
+                  className={clsx(
+                    classes.item,
+                    active && classes.itemActiveItem
+                  )}
+                >
                   <ListItemIcon className={classes.itemIcon}>
                     {icon}
                   </ListItemIcon>

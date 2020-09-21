@@ -24,7 +24,7 @@ public class CsvToMongo {
     public List<String> csvToList() {
         String compSkill = "";
         List<String> allComp = new ArrayList<>();
-        String csvPath = "/home/jabrane/Desktop/info1/Cv/computer_skills.csv";
+        String csvPath = "/home/akrem/Desktop/Plateforme-de-gestion-de-carrieres-et-de-formations/outils necessaire/computer_skills.csv";
         try {
             FileReader csvReader = new FileReader(csvPath);
             BufferedReader br = new BufferedReader(csvReader);

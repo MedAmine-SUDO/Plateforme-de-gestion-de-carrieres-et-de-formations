@@ -66,51 +66,7 @@ const defaultCategories = [
   },
 ];
 function Navigator(props) {
-  const [categories, setCategories] = useState([
-    {
-      id: "Develop",
-      children: [
-        {
-          id: "Users List",
-          icon: <PeopleIcon />,
-          link: "/admin_dashboard/users",
-        },
-        {
-          id: "Tests",
-          icon: <DnsRoundedIcon />,
-          link: "/admin_dashboard/tests",
-        },
-        {
-          id: "Formations",
-          icon: <PermMediaOutlinedIcon />,
-          link: "/admin_dashboard/formations",
-        },
-        { id: "Hosting", icon: <PublicIcon />, link: "/admin_dashboard" },
-        {
-          id: "Functions",
-          icon: <SettingsEthernetIcon />,
-          link: "/admin_dashboard",
-        },
-        {
-          id: "ML Kit",
-          icon: <SettingsInputComponentIcon />,
-          link: "/admin_dashboard",
-        },
-      ],
-    },
-    {
-      id: "Quality",
-      children: [
-        { id: "Analytics", icon: <SettingsIcon />, link: "/admin_dashboard" },
-        { id: "Performance", icon: <TimerIcon />, link: "/admin_dashboard" },
-        {
-          id: "Test Lab",
-          icon: <PhonelinkSetupIcon />,
-          link: "/admin_dashboard",
-        },
-      ],
-    },
-  ]);
+  const [categories, setCategories] = useState(defaultCategories);
   const { classes, ...other } = props;
   const handleNavigation = (id, childId) => {
     let newCategories = defaultCategories;

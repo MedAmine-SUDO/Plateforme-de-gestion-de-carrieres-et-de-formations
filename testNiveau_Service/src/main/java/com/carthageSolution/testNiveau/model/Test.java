@@ -2,10 +2,6 @@ package com.carthageSolution.testNiveau.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
-<<<<<<< HEAD
-=======
-import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
->>>>>>> 8f133aef5598cab05f12a756f6194ce2b6f7551b
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -17,11 +13,7 @@ public class Test {
     public static final String SEQUENCE_NAME="test_sequence";
 
     @Id
-<<<<<<< HEAD
     private String id;
-=======
-    private String id_test;
->>>>>>> 8f133aef5598cab05f12a756f6194ce2b6f7551b
 
     private Long numTest;
     private List<Question> questionList;
@@ -38,21 +30,12 @@ public class Test {
         this.result = result;
     }
 
-<<<<<<< HEAD
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
-=======
-    public String getId_test() {
-        return id_test;
-    }
-
-    public void setId_test(String id_test) {
-        this.id_test = id_test;
->>>>>>> 8f133aef5598cab05f12a756f6194ce2b6f7551b
     }
 
     public Long getNumTest() {
@@ -90,11 +73,7 @@ public class Test {
     @Override
     public String toString() {
         return "Test{" +
-<<<<<<< HEAD
                 "id_test='" + id + '\'' +
-=======
-                "id_test='" + id_test + '\'' +
->>>>>>> 8f133aef5598cab05f12a756f6194ce2b6f7551b
                 ", numTest=" + numTest +
                 ", questionList=" + questionList +
                 ", user_id='" + userId + '\'' +

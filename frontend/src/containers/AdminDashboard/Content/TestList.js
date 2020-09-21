@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { stylesContent } from "../styles/Styles"
 import NavPills from '../../../components/NavPills/NavPills';
 import { AssignmentInd, Toc } from '@material-ui/icons';
-import TestPage from '../../Pages/TestPage/TestPage';
+import TestNiveauAdmin from '../../Pages/TestPage/TestNiveauAdmin';
 
 function TestList(props) {
 
@@ -15,7 +15,7 @@ function TestList(props) {
           tabButton: "Test de niveau",
           tabIcon: Toc, 
           tabContent:<>
-            <TestPage />
+            <TestNiveauAdmin />
 
           </>
         }, {

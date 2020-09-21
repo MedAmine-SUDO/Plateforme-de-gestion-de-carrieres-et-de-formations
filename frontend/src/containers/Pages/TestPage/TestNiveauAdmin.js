@@ -1,8 +1,8 @@
 import React from "react";
 import NavPills from "../../../components/NavPills/NavPills.js";
-import QuestionTable from "./Sections/QuestionTable.js";
+import TestNiveauQuestionTable from "./Sections/TestNiveauQuestionTable.js";
 
-function TestPage() {
+function TestNiveauAdmin() {
 
   return (
     <NavPills
@@ -10,7 +10,7 @@ function TestPage() {
       tabs={[{
         tabButton: "Questions", tabContent: (
           <>
-            <QuestionTable />
+            <TestNiveauQuestionTable />
           </>
         )
       }, { tabButton: "Tests" }]}
@@ -18,4 +18,4 @@ function TestPage() {
   );
 }
 
-export default TestPage;
+export default TestNiveauAdmin;

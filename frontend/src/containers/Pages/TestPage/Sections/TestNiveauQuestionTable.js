@@ -10,7 +10,7 @@ import {
   testNiveauUpdateQuestion,
 } from "../../../../actions/TestNiveauActions";
 
-export default function QuestionTable() {
+export default function TestNiveauQuestionTable() {
   const [state, setState] = React.useState({
     columns: [
       { title: "Question number", field: "questionNbr", type: "numeric" },

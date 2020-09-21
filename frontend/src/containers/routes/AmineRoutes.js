@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route } from "react-router-dom";
-import TestPage from "../Pages/TestPage/TestPage";
+import TestPage from "../Pages/TestPage/TestNiveauAdmin";
 
 function AmineRoutes() {
     return (

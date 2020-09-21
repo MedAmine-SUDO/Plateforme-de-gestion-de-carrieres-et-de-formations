@@ -8,10 +8,6 @@ export const formationGetAll = () => async (dispatch) => {
       return res;
     } catch (err) {
       dispatch({ type: "FORMATION_END_LOADING" });
-      return dispatch({
-        type: "FORMATION_FAILURE",
-        payload: err,
-      });
     }
   };
 export const formationGetData = (id) => async (dispatch) => {
@@ -22,10 +18,6 @@ export const formationGetData = (id) => async (dispatch) => {
     return res;
   } catch (err) {
     dispatch({ type: "FORMATION_END_LOADING" });
-    return dispatch({
-      type: "FORMATION_FAILURE",
-      payload: err,
-    });
   }
 };
 export const formationUpdateData = (formation) => async (dispatch) => {
@@ -36,7 +28,6 @@ export const formationUpdateData = (formation) => async (dispatch) => {
     return res;
   } catch (err) {
     dispatch({ type: "FORMATION_END_LOADING" });
-
   }
 };
 export const formationPostData = (formation) => async (dispatch) => {
@@ -48,18 +39,16 @@ export const formationPostData = (formation) => async (dispatch) => {
     return res;
   } catch (err) {
     dispatch({ type: "FORMATION_END_LOADING" });
-
   }
 };
 export const formationDeleteData = (id) => async (dispatch) => {
     try {
       dispatch({ type: "FORMATION_LOADING" });
       const res = await apiCallFormation("/"+id, "delete");
-      dispatch({ type: "FORMATION_END_LOADING" });
+      dispatch({ type: "FORMATION_GET_DATA", payload: res.data });
   
       return res;
     } catch (err) {
       dispatch({ type: "FORMATION_END_LOADING" });
-  
     }
   };

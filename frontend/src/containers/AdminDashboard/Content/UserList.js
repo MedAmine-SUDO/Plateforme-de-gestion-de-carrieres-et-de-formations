@@ -14,7 +14,7 @@ import Check from "@material-ui/icons/Check";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SnackbarContent from "../../../components/Snackbar/SnackbarContent.js";
 
-function UserList(props) {
+function UserList() {
   const dispatch = useDispatch();
   const authDetail = useSelector((state) => state.auth);
   const [alert, setAlert] = useState(null);
@@ -212,11 +212,11 @@ function UserList(props) {
               ),
             },
             {
-              tabButton: "Account Settings",
+              tabButton: "Users Settings",
               tabIcon: Schedule,
               tabContent: (
                 <>
-                  <h1>blabla</h1>
+                  <h1>Empty</h1>
                 </>
               ),
             },

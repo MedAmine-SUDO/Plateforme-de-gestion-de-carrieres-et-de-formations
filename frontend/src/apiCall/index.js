@@ -22,7 +22,7 @@ const apiCallProfile = (url, method, body = {}, token = '') => axios({
 
 const apiCallFormation = (url, method, body = {}, token = '') => axios({
   method,
-  url: `http://localhost:8083/api/profile${url}`,
+  url: `http://localhost:8083/api/formation${url}`,
   data: body,
   headers: {
     ...composeToken(token)

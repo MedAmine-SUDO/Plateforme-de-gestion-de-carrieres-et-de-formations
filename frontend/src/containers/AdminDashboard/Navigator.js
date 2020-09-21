@@ -30,7 +30,7 @@ const defaultCategories = [
         link: "/admin_dashboard/users",
       },
       {
-        id: "Database",
+        id: "Tests",
         icon: <DnsRoundedIcon />,
         link: "/admin_dashboard/tests",
       },
@@ -77,7 +77,7 @@ function Navigator(props) {
           active:true
         },
         {
-          id: "Database",
+          id: "Tests",
           icon: <DnsRoundedIcon />,
           link: "/admin_dashboard/tests",
         },

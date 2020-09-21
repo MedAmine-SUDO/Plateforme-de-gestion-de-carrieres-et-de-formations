@@ -6,7 +6,7 @@ function TestPage() {
 
   return (
     <NavPills
-      color="primary"
+      color="adminDashboard"
       tabs={[{
         tabButton: "Questions", tabContent: (
           <>

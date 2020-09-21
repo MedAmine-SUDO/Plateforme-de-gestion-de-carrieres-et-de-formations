@@ -119,9 +119,9 @@ export default function QuestionTable() {
   };
 
   const handleRowUpdate = (newData, oldData, resolve) => {
-    
+
     console.log(newData)
-    
+
     let questionToSend = {
       id: oldData.id,
       questionNbr: newData.questionNbr,
@@ -162,11 +162,11 @@ export default function QuestionTable() {
         });
       }
     })
-  }
+  };
 
   useEffect(() => {
     dispatch(testNiveauGetQuestions()).then(res => {
-      res.data.foreach(question => {
+      res.data.forEach(question => {
         let newQuestion = {
           id: "",
           questionNbr: "",
@@ -209,10 +209,8 @@ export default function QuestionTable() {
           data.push(newQuestion);
           return { ...prevState, data };
         });
-        
       })
-
-    });
+    })
   }, [dispatch]);
 
   return (

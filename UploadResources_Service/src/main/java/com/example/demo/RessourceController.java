@@ -51,7 +51,7 @@ private VideoService videoService ;
 //private StorageFileRepository storageFileRepository;
 @Autowired
 private StorageService storageFileService;
-@GetMapping("/")
+@GetMapping("/all")
 public List <Ressource> GetRessources(){
 	return ressourceRepository.findAll();
 	

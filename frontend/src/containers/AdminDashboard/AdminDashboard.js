@@ -10,6 +10,7 @@ import Header from "./Header";
 import { stylesPaperbase, theme, Copyright } from "./styles/Styles";
 import { Switch, Redirect, Route } from "react-router-dom";
 import FormationList from "./Content/FormationList";
+import ProfileList from "./Content/ProfileList";
 
 const drawerWidth = 256;
 
@@ -45,6 +46,7 @@ function AdminDashboard(props) {
               <Route path={"/admin_dashboard/users"} exact component={UserList} />
               <Route path={"/admin_dashboard/tests"} exact component={TestList} />
               <Route path={"/admin_dashboard/formations"} exact component={FormationList} />
+              <Route path={"/admin_dashboard/profiles"} exact component={ProfileList} />
 
               <Redirect to={"/admin_dashboard/users"} />
             </Switch>

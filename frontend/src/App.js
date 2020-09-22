@@ -23,7 +23,6 @@ function App() {
         <Switch>
           <Route path="/signup" exact component={SignUp} />
           <Route path="/signin" exact component={SignIn} />
-          <Redirect to={"/signin"} />
         </Switch>
       </div>
     );

@@ -4,7 +4,8 @@ import {
   infoColor,
   successColor,
   warningColor,
-  dangerColor
+  dangerColor,
+  adminDashboardColor
 } from "../../material-kit-react.js";
 
 const navPillsStyle = theme => ({
@@ -117,6 +118,14 @@ const navPillsStyle = theme => ({
     "&,&:hover": {
       color: "#FFFFFF",
       backgroundColor: roseColor,
+      boxShadow:
+        "0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(233, 30, 99, 0.4)"
+    }
+  },
+  adminDashboard:{
+    "&,&:hover": {
+      color: "#FFFFFF",
+      backgroundColor: adminDashboardColor,
       boxShadow:
         "0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(233, 30, 99, 0.4)"
     }

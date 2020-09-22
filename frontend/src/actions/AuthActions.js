@@ -56,3 +56,25 @@ export const logoutUser = () => async (dispatch) => {
     dispatch({ type: "SET_CURRENT_USER_FAILURE", payload: err.response.data });
   }
 };
+export const getAllUsers = () => async (dispatch) => {
+  try {
+    dispatch({ type: "AUTH_LOADING" });
+    const res = await apiCallAuth("/auth/all", "get");
+    dispatch({ type: "AUTH_END_LOADING" });
+    return res;
+  } catch (err) {
+    dispatch({ type: "AUTH_END_LOADING" });
+    dispatch({ type: "SET_CURRENT_USER_FAILURE", payload: err });
+  }
+};
+export const deleteUser = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: "AUTH_LOADING" });
+    const res = await apiCallAuth("/auth/"+id, "delete");
+    dispatch({ type: "AUTH_END_LOADING" });
+    return res;
+  } catch (err) {
+    dispatch({ type: "AUTH_END_LOADING" });
+    dispatch({ type: "SET_CURRENT_USER_FAILURE", payload: err });
+  }
+};

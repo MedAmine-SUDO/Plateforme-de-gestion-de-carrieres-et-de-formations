@@ -9,7 +9,8 @@ const apiCallAuth = (url, method, body = {}, token = '') => axios({
   headers: {
     ...composeToken(token)
   }
-});
+}); 
+
 const apiCallProfile = (url, method, body = {}, token = '') => axios({
   method,
   url: `http://localhost:8082/api/profile${url}`,
@@ -18,13 +19,32 @@ const apiCallProfile = (url, method, body = {}, token = '') => axios({
     ...composeToken(token)
   }
 });
-const apiCallRessource = (url, method, body = {}, token = '') => axios({
+
+const apiCallFormation = (url, method, body = {}, token = '') => axios({
   method,
-  url: `http://localhost:8083/api${url}`,
+  url: `http://localhost:8083/api/formation${url}`,
   data: body,
   headers: {
     ...composeToken(token)
   }
 });
 
-export {apiCallAuth , apiCallProfile ,apiCallRessource };
+const apiCalltestNiveau = (url, method, body = {}, token = '') => axios({
+  method,
+  url: `http://localhost:8060/api/testNiveau${url}`,
+  data: body,
+  headers: {
+    ...composeToken(token)
+  }
+});
+const apiCallRessource = (url, method, body = {}, token = '') => axios({
+  method,
+  url: `http://localhost:8091/api${url}`,
+  data: body,
+  headers: {
+    ...composeToken(token)
+  }
+});
+
+
+export {apiCallAuth , apiCallProfile, apiCallFormation, apiCalltestNiveau , apiCallRessource };

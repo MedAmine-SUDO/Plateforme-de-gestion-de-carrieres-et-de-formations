@@ -1,10 +1,12 @@
 import React from 'react'
-//import { Route } from "react-router-dom";
+import { Route } from "react-router-dom";
+import TestPage from "../Pages/TestPage/TestNiveauAdmin";
 
 function AmineRoutes() {
     return (
         <>
-          {/* <Route exact path="/test" component={} />   */}
+            <Route path="/test" exact component={TestPage} />
+
         </>
     )
 }

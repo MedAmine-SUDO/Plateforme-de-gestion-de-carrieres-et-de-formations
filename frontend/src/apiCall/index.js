@@ -9,7 +9,7 @@ const apiCallAuth = (url, method, body = {}, token = '') => axios({
   headers: {
     ...composeToken(token)
   }
-});
+}); 
 
 const apiCallProfile = (url, method, body = {}, token = '') => axios({
   method,

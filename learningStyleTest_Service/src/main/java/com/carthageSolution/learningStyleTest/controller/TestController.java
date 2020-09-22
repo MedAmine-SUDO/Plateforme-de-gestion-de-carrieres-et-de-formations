@@ -4,9 +4,14 @@ import com.carthageSolution.learningStyleTest.model.Question;
 import com.carthageSolution.learningStyleTest.model.Test;
 import com.carthageSolution.learningStyleTest.service.SequenceGeneratorService;
 import com.carthageSolution.learningStyleTest.service.TestService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,18 +20,29 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/testProfile")
+@Api(value = "TestProfileTestAPI", produces = MediaType.APPLICATION_JSON_VALUE, description = "TP Test Resource")
 public class TestController {
 
     @Autowired
     private TestService testService;
 
     //Get all tests
+    @ApiOperation("Get All Tests")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully get Tests"),
+            @ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
+            @ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
+            @ApiResponse(code = 404, message = "The resource  not found")})
     @GetMapping("")
     public List<Test> getAllTests(){
         return testService.findAll();
     }
 
     //Automatically create a test by specifiying number of questions in that test
+    @ApiOperation("Create Test By Specifying nbr of questions")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully Create Test"),
+            @ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
+            @ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
+            @ApiResponse(code = 404, message = "The resource  not found")})
     @GetMapping("/create/{nbr}")
     public ResponseEntity<?> saveTest(@PathVariable("nbr") Integer nbrQuestions){
         testService.saveTest(nbrQuestions);
@@ -34,12 +50,22 @@ public class TestController {
     }
 
     //Get a test by its number
+    @ApiOperation("Get Test By it's Nbr")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully get Test"),
+            @ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
+            @ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
+            @ApiResponse(code = 404, message = "The resource  not found")})
     @GetMapping("/{nbr}")
     public Test getTestByNbr(@PathVariable("nbr") Integer nbr){
         return testService.findByNumTest(nbr);
     }
 
     //Delete all tests
+    @ApiOperation("Delete All Tests")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully delete Tests"),
+            @ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
+            @ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
+            @ApiResponse(code = 404, message = "The resource  not found")})
     @DeleteMapping("/deleteAll")
     public ResponseEntity<?> deleteAllTests(){
         testService.deleteAll();
@@ -47,6 +73,11 @@ public class TestController {
     }
 
     //Update a test
+    @ApiOperation("Update Test")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully update test"),
+            @ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
+            @ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
+            @ApiResponse(code = 404, message = "The resource  not found")})
     @PutMapping("/{id}")
     public ResponseEntity<Test> updateTest(@PathVariable("id") String id, @RequestBody Test test){
         Optional<Test> newTest = testService.findById(id);

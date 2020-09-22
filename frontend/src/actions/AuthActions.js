@@ -10,10 +10,10 @@ export const signUp = (user) => async (dispatch) => {
     return res;
   } catch (err) {
     dispatch({ type: "AUTH_END_LOADING" });
-    return dispatch({
-      type: "SIGNUP_USER_FAILURE",
-      payload: err.response.data,
-    });
+    // return dispatch({
+    //   type: "SIGNUP_USER_FAILURE",
+    //   payload: err.response.data,
+    // });
   }
 };
 
@@ -38,10 +38,6 @@ export const signIn = (user) => async (dispatch) => {
     return res;
   } catch (err) {
     dispatch({ type: "AUTH_END_LOADING" });
-    return dispatch({
-      type: "SIGNIN_USER_FAILURE",
-      payload: err.response.data,
-    });
   }
 };
 export const logoutUser = () => async (dispatch) => {

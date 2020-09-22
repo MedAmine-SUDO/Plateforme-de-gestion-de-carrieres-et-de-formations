@@ -1,25 +1,19 @@
-package com.example.Competence.CVreader;
+package com.example.Competence_service.CvReader;
 
-import com.example.Competence.CsvToMongo.CsvToMongo;
-
+import com.example.Competence_service.convertCsv.CsvToList;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
-
 import org.springframework.core.io.ClassPathResource;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.nio.file.Files;
-
 import java.util.*;
-
-
 
 public class CvReader {
 
     //convert Mutipartfile to a File
-    public  File convert(MultipartFile file) throws IOException {
+    public File convert(MultipartFile file) throws IOException {
         File convFile = new File(file.getOriginalFilename());
         convFile.createNewFile();
         FileOutputStream fos = new FileOutputStream(convFile);
@@ -67,9 +61,9 @@ public class CvReader {
             }
             // I use close() to flush the stream.
             wr.close();
-            } catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            }
+        }
 
         //list all the words in the candidate's resume
 
@@ -79,7 +73,7 @@ public class CvReader {
 
         try {
 
-           //read res.txt and extract data (read)
+            //read res.txt and extract data (read)
             File file = new ClassPathResource("res.txt").getFile();
             content = new String(Files.readAllBytes(file.toPath()));
 
@@ -103,21 +97,21 @@ public class CvReader {
         //read dataset of all computer skills from csv file
         //convert csv file into list
 
-        /*
-        CsvToMongo csvToMongo = new CsvToMongo();
+
+        CsvToList csvToMongo = new CsvToList();
         List<String> allComp ;
-        allComp = csvToMongo.csvToList();
-        */
+        allComp = csvToMongo.csvToList2();
+
 
         //read Dataset from mongodb
 
-        CsvToMongo csvToMongo = new CsvToMongo();
+      /*  CsvToMongo csvToMongo = new CsvToMongo();
         List<String> allComp ;
         allComp = csvToMongo.mongoToList();
 
         for (String comp: allComp){
             System.out.println(comp);
-        }
+        }*/
 
 
 

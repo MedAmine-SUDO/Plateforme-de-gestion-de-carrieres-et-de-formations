@@ -29,6 +29,7 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 @CrossOrigin(origins = "*")
+
 @RequestMapping("/api/ressource")
 @Api(value = "RessourceUploadAPI", produces = MediaType.APPLICATION_JSON_VALUE, description = "Upload ressource ")
 
@@ -66,6 +67,7 @@ public Ressource GetRessources(@PathVariable String id){
 	return ressourceRepository.findById(id).orElse(null);
 	
 }
+@CrossOrigin
 @ApiOperation("Add a Ressouce")
 @ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully Add a Ressouce"),
 		@ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),

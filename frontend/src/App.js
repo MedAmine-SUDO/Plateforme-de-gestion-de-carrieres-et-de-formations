@@ -40,9 +40,10 @@ function App() {
           <NavBar />
         </nav>
         <Switch>
+          <WiemRoutes />
           <AkremRoutes />
           <AmineRoutes />
-          <WiemRoutes />
+
           <RanimRoutes />
           {/* redirect */}
           <Redirect to={"/"} />

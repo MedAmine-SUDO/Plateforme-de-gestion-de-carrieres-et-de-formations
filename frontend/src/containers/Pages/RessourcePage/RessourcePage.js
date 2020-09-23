@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {useDispatch } from "react-redux";
 import classNames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,6 +7,10 @@ import GridContainer from "../../../components/Grid/GridContainer.js";
 import GridItem from "../../../components/Grid/GridItem.js";
 import Footer from "../../../components/Footer/Footer.js";
 import NavPills from "../../../components/NavPills/NavPills.js";
+import Warning from "@material-ui/icons/Warning";
+import Check from "@material-ui/icons/Check";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import SnackbarContent from "../../../components/Snackbar/SnackbarContent.js";
 //import Dashboard from "@material-ui/icons/Dashboard";
 //import Schedule from "@material-ui/icons/Schedule";
 //import DeleteForeverTwoToneIcon from '@material-ui/icons/DeleteForeverTwoTone';
@@ -19,12 +23,16 @@ import MaterialTable from "material-table";
 //import axios from 'axios';
 import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
 import PlaylistPlayIcon from "@material-ui/icons/PlaylistPlay";
-import { ressourcePostData } from "../../../actions/RessourceActions.js";
+import { ressourcePostData, ressourceGetAll } from "../../../actions/RessourceActions.js";
 const useStyles = makeStyles(styles);
 
 function RessourcePage() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [alert, setAlert] = useState(null);
+  const [alertAdd, setAlertAdd] = useState(null);
+  const [alertUpdate, setAlertUpdate] = useState(null);
+  const [alertDelete, setAlertDelete] = useState(null);
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
   const [file, setFile] = useState("");
@@ -62,25 +70,38 @@ function RessourcePage() {
 
   const [state, setState] = useState({
     columns: [
-      { title: 'Name', field: 'name' },
-      { title: 'Surname', field: 'surname' },
-      { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-      {
-        title: 'Birth Place',
-        field: 'birthCity',
-        lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' },
-      },
+      { title: 'title', field: 'title' },
+      { title: 'description', field: 'description' }
+  
+     
     ],
     data: [
-      { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-      {
-        name: 'Zerya Betül',
-        surname: 'Baran',
-        birthYear: 2017,
-        birthCity: 34,
-      },
+     { title:"Has", description:"hfhgé"}
     ],
   });
+  useEffect(() => {
+    dispatch(ressourceGetAll()).then((res) => {
+      if (res) {
+        setState({
+          columns: state.columns,
+          data: res.data,
+        });
+        setAlert(null);
+      } else
+        setAlert(
+          <SnackbarContent
+            message={
+              <span>
+                <b>WARNING ALERT:</b> Could not reach data... Refresh Page...
+              </span>
+            }
+            close
+            color="warning"
+            icon={Warning}
+          />
+        );
+    });
+  }, [dispatch, state.columns]);
   return (
     <div>
       <div>

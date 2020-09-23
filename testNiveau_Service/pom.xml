@@ -15,12 +15,12 @@
     <description>Test de niveau microservice</description>
 
     <properties>
-<<<<<<< HEAD
+
         <java.version>1.8</java.version>
-=======
-        <java.version>11</java.version>
-        <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
->>>>>>> 61482b8b272464ec1396b3534800161f69085421
+                <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
+        
+
+
     </properties>
 
     <dependencies>

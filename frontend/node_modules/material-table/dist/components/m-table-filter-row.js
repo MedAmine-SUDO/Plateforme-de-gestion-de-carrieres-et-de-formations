@@ -293,7 +293,9 @@ var MTableFilterRow = /*#__PURE__*/function (_React$Component) {
       }
 
       if (this.props.hasDetailPanel) {
-        columns.splice(0, 0, /*#__PURE__*/React.createElement(_TableCell["default"], {
+        var alignment = this.props.detailPanelColumnAlignment;
+        var index = alignment === "left" ? 0 : columns.length;
+        columns.splice(index, 0, /*#__PURE__*/React.createElement(_TableCell["default"], {
           padding: "none",
           key: "key-detail-panel-column"
         }));
@@ -326,6 +328,7 @@ var MTableFilterRow = /*#__PURE__*/function (_React$Component) {
 
 MTableFilterRow.defaultProps = {
   columns: [],
+  detailPanelColumnAlignment: "left",
   selection: false,
   hasActions: false,
   localization: {
@@ -336,6 +339,7 @@ MTableFilterRow.defaultProps = {
 MTableFilterRow.propTypes = {
   columns: _propTypes["default"].array.isRequired,
   hasDetailPanel: _propTypes["default"].bool.isRequired,
+  detailPanelColumnAlignment: _propTypes["default"].string,
   isTreeData: _propTypes["default"].bool.isRequired,
   onFilterChanged: _propTypes["default"].func.isRequired,
   filterCellStyle: _propTypes["default"].object,

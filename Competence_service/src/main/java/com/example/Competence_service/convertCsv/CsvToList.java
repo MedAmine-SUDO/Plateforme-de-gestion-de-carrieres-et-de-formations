@@ -12,7 +12,7 @@ import java.util.List;
 public class CsvToList {
 
     //older version
-    public List<String> csvToList() {
+   /* public List<String> csvToList() {
         String compSkill = "";
         List<String> allComp = new ArrayList<>();
 
@@ -29,7 +29,7 @@ public class CsvToList {
 
         return allComp;
 
-    }
+    }*/
     //new version
     public List<String> csvToList2(){
         String compSkill = "";

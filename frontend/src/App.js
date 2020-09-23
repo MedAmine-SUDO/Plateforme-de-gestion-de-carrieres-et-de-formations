@@ -15,6 +15,7 @@ import DashboardPage from "./containers/Pages/DashboardPage/DashboardPage";
 import DefaultPage from "./containers/Pages/Default/DefaultPage";
 import TestNiveauAdmin from "./containers/Pages/TestPage/TestNiveauAdmin";
 import RessourcePage from "./containers/Pages/RessourcePage/RessourcePage";
+import FormationPage from "./containers/Pages/FormationPage/FormationPage";
 
 function App() {
   const authDetail = useSelector((state) => state.auth);
@@ -26,6 +27,8 @@ function App() {
           <NavBar />
         </nav>
         <Switch>
+           {/* Landing page*/}
+          <Route path="/" exact component={LandingPage} />
           <Route path="/signup" exact component={SignUp} />
           <Route path="/signin" exact component={SignIn} />
         </Switch>
@@ -45,16 +48,18 @@ function App() {
           <NavBar />
         </nav>
         <Switch>
-          {/* Landing */}
+          {/* Landing page*/}
           <Route path="/" exact component={LandingPage} />
-          {/* dashboard */}
+          {/* dashboard page*/}
           <Route path="/dashboard" exact component={DashboardPage} />
-          {/* authentication */}
+          {/* authentication pages*/}
           <Route path="/signup" exact component={SignUp} />
           <Route path="/signin" exact component={SignIn} />
-          {/* condidat profile */}
+          {/* condidat profile pages */}
           <Route path={"/profile"} exact component={ProfilePage} />
           <Route path={"/account"} exact component={AccountPage} />
+          {/* formations pages */}
+          <Route path={"/formations"} exact component={FormationPage} />
           {/* default */}
           <Route path={"/default"} exact component={DefaultPage} />
 

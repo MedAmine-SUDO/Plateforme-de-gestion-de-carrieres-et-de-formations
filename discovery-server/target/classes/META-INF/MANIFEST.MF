@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
+Built-By: medamine
+Build-Jdk: 10.0.1
 Implementation-Title: discovery-server
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: akrem
 Implementation-Vendor-Id: io.javabrains
-Build-Jdk: 1.8.0_231
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
  ot-starter-parent/discovery-server
 Created-By: Maven Integration for Eclipse

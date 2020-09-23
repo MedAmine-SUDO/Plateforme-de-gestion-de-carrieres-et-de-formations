@@ -3,9 +3,9 @@ package com.example.Competence_service.Controllers;
 import com.example.Competence_service.CvReader.CvReader;
 import com.example.Competence_service.Models.Competence;
 import com.example.Competence_service.Repositories.CompetenceRepository;
-import com.example.Competence_service.convertCsv.CsvToList;
 
 import io.swagger.annotations.Api;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -67,18 +66,19 @@ public class CompetenceController {
 	}
 
 	// Get one candidate's competence from his id
-	@GetMapping("/{idCandidat}")
-	public Competence getone(@PathVariable("idCandidat") String idCandidat) {
-		return competenceRepository.findByIdCandidat(idCandidat);
+	@GetMapping("/candidat/{idCandidat}")
+	public List<Competence> getone(@PathVariable("idCandidat") String idCandidat) {
+		List <Competence> list = new ArrayList<>();
+		competenceRepository.findByIdCandidat(idCandidat).forEach(list::add);
+		return  list;
 	}
 
 	// get one candidate's competence by the competence id
-	@GetMapping("/{id}")
-	public Optional<Competence> getOneByid(@PathVariable("id") String id) {
-		return competenceRepository.findById(id);
-	}
 
-	// delete by id
+	@GetMapping("/{id}")
+	public Competence GetCompetence(@PathVariable String id) {
+		return competenceRepository.findByid(id);
+	}
 
 	@DeleteMapping("/{id}")
 	public void deleteCompetence(@PathVariable("id") String id) {

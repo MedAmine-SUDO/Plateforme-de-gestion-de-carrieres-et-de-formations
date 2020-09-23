@@ -129,7 +129,7 @@ function AccountPage() {
       region
     )
       {
-        if(profileData.data)
+        if(id)
         dispatch(
           profileUpdateData({
             id,
@@ -167,7 +167,7 @@ function AccountPage() {
           <div className={classes.container}>
             <GridContainer justify="center">
               <GridItem xs={12} sm={12}>
-                {profileData.loading ? (
+                {profileData.loading || authDetail.loading ? (
                   <CircularProgress />
                 ) : (
                   <NavPills

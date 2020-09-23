@@ -41,7 +41,7 @@ function FormationList() {
       {
         title: "Type",
         field: "type",
-        lookup: { "a distance": "a distance", presentiel: "presentiel" },
+        lookup: { "a distance": "a distance", "presentiel": "presentiel" },
       },
     ],
     data: [],

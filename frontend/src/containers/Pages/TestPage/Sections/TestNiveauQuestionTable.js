@@ -95,32 +95,29 @@ export default function TestNiveauQuestionTable() {
         break;
     }
 
-    dispatch(testNiveauPostQuestion(questionToAdd)).then(res => {
+    dispatch(testNiveauPostQuestion(questionToAdd)).then((res) => {
       resolve();
       setState((prevState) => {
         const data = [...prevState.data];
         data.push(newData);
         return { ...prevState, data };
-      })
-    })
-
-
+      });
+    });
   };
 
   const handleRowDelete = (oldData, resolve) => {
-    dispatch(testNiveauDeleteQuestion(oldData.id)).then(res => {
+    dispatch(testNiveauDeleteQuestion(oldData.id)).then((res) => {
       resolve();
       setState((prevState) => {
         const data = [...prevState.data];
         data.splice(data.indexOf(oldData), 1);
         return { ...prevState, data };
-      })
-    })
+      });
+    });
   };
 
   const handleRowUpdate = (newData, oldData, resolve) => {
-
-    console.log(newData)
+    console.log(newData);
 
     let questionToSend = {
       id: oldData.id,
@@ -152,65 +149,69 @@ export default function TestNiveauQuestionTable() {
         break;
     }
 
-    dispatch(testNiveauUpdateQuestion(oldData.id, questionToSend)).then(res => {
-      resolve();
-      if (oldData) {
-        setState((prevState) => {
-          const data = [...prevState.data];
-          data[data.indexOf(oldData)] = newData;
-          return { ...prevState, data };
-        });
+    dispatch(testNiveauUpdateQuestion(oldData.id, questionToSend)).then(
+      (res) => {
+        resolve();
+        if (oldData) {
+          setState((prevState) => {
+            const data = [...prevState.data];
+            data[data.indexOf(oldData)] = newData;
+            return { ...prevState, data };
+          });
+        }
       }
-    })
+    );
   };
 
   useEffect(() => {
-    dispatch(testNiveauGetQuestions()).then(res => {
-      res.data.forEach(question => {
-        let newQuestion = {
-          id: "",
-          questionNbr: "",
-          questionContent: "",
-          firstAnswer: "",
-          secondAnswer: "",
-          thirdAnswer: "",
-          fourthAnswer: "",
-          difficulty: "",
-        };
+    dispatch(testNiveauGetQuestions()).then((res) => {
+      if (res) {
+        res.data.forEach((question) => {
+          let newQuestion = {
+            id: "",
+            questionNbr: "",
+            questionContent: "",
+            firstAnswer: "",
+            secondAnswer: "",
+            thirdAnswer: "",
+            fourthAnswer: "",
+            difficulty: "",
+          };
 
-        switch (question.difficulty) {
-          case "BASIC":
-            question.difficulty = 1;
-            break;
-          case "INTERMEDIATE":
-            question.difficulty = 2;
-            break;
-          case "HARD":
-            question.difficulty = 3;
-            break;
-          case "PROFESSIONAL":
-            question.difficulty = 4;
-            break;
-          default:
-            break;
-        }
+          switch (question.difficulty) {
+            case "BASIC":
+              question.difficulty = 1;
+              break;
+            case "INTERMEDIATE":
+              question.difficulty = 2;
+              break;
+            case "HARD":
+              question.difficulty = 3;
+              break;
+            case "PROFESSIONAL":
+              question.difficulty = 4;
+              break;
+            default:
+              break;
+          }
 
-        newQuestion.id = question.id;
-        newQuestion.questionNbr = question.questionNbr;
-        newQuestion.questionContent = question.questionContent;
-        newQuestion.difficulty = question.difficulty;
-        newQuestion.firstAnswer = question.answers[0].answerContent;
-        newQuestion.secondAnswer = question.answers[1].answerContent;
-        newQuestion.thirdAnswer = question.answers[2].answerContent;
-        newQuestion.fourthAnswer = question.answers[3].answerContent;
+          newQuestion.id = question.id;
+          newQuestion.questionNbr = question.questionNbr;
+          newQuestion.questionContent = question.questionContent;
+          newQuestion.difficulty = question.difficulty;
+          newQuestion.firstAnswer = question.answers[0].answerContent;
+          newQuestion.secondAnswer = question.answers[1].answerContent;
+          newQuestion.thirdAnswer = question.answers[2].answerContent;
+          newQuestion.fourthAnswer = question.answers[3].answerContent;
 
-        setState((prevState) => {
-          const data = [...prevState.data];
-          data.push(newQuestion);
-          return { ...prevState, data };
+          setState((prevState) => {
+            const data = [...prevState.data];
+            data.push(newQuestion);
+            return { ...prevState, data };
+          });
         });
-      })
-    })
+      }
+    });
   }, [dispatch]);
 
   return (
@@ -222,16 +223,16 @@ export default function TestNiveauQuestionTable() {
       editable={{
         onRowAdd: (newData) =>
           new Promise((resolve) => {
-            handleRowAdd(newData, resolve)
+            handleRowAdd(newData, resolve);
           }),
 
         onRowUpdate: (newData, oldData) =>
           new Promise((resolve) => {
-            handleRowUpdate(newData, oldData, resolve)
+            handleRowUpdate(newData, oldData, resolve);
           }),
         onRowDelete: (oldData) =>
           new Promise((resolve) => {
-            handleRowDelete(oldData, resolve)
+            handleRowDelete(oldData, resolve);
           }),
       }}
     />

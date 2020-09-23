@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
+Built-By: wiem
+Build-Jdk: 11.0.5
 Implementation-Title: discovery-server
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: wiem
 Implementation-Vendor-Id: io.javabrains
-Build-Jdk: 1.8.0_265
-Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
- ot-starter-parent/discovery-server
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
+ -starter-parent/discovery-server
 Created-By: Maven Integration for Eclipse
 

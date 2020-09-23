@@ -3,103 +3,93 @@ package com.example.Competence_service.Controllers;
 import com.example.Competence_service.CvReader.CvReader;
 import com.example.Competence_service.Models.Competence;
 import com.example.Competence_service.Repositories.CompetenceRepository;
-import com.example.Competence_service.convertCsv.CsvToList;
+
+import io.swagger.annotations.Api;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping("/Competence")
+@CrossOrigin(origins = "*")
+@RequestMapping("/api/competence")
+@Api(value = "CompetenceResourceAPI", produces = MediaType.APPLICATION_JSON_VALUE, description = "Competence Resource")
 public class CompetenceController {
 
-    @Autowired
-    CompetenceRepository competenceRepository;
+	@Autowired
+	CompetenceRepository competenceRepository;
 
-    //add new Competence
-    @PostMapping("")
-    public ResponseEntity<Competence> add(@RequestBody Competence competence){
-        try{
-        Competence c = new Competence();
-        c.setIdCandidat(competence.getIdCandidat());
-        c.setList(competence.getList());
-        Competence c_ = competenceRepository.save(c);
-        //update the csv file
+	// add new Competence
+	@PostMapping("/")
+	public ResponseEntity<Competence> add(@RequestBody Competence competence) {
+		try {
+			Competence c_ = competenceRepository.save(competence);
+			return new ResponseEntity<>(c_, HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
-            /*
-                to be added in the next commit
-             */
+	@PostMapping("/cv")
+	public ResponseEntity<Competence> addfromcv(@RequestParam("idCandidat") String idCandidat,
+			@RequestParam("file") MultipartFile file) {
+		try {
+			Competence c = new Competence();
+			c.setIdCandidat(idCandidat);
 
-            return new ResponseEntity<>(c_, HttpStatus.CREATED);
-        }catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+			// call the detection algorithm
+			CvReader cvReader = new CvReader();
+			List<String> list = cvReader.readCV(file);
 
-    @PostMapping("/cv")
-    public ResponseEntity<Competence> addfromcv(@RequestParam("idCandidat") String idCandidat,
-                                                @RequestParam("file") MultipartFile file ){
-        try{
-            Competence c = new Competence();
-            c.setIdCandidat(idCandidat);
+			c.setList(list);
+			Competence c_ = competenceRepository.save(c);
+			return new ResponseEntity<>(c_, HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
-            //call the detection algorithm
-            CvReader cvReader = new CvReader();
-            List<String> list = cvReader.readCV(file);
+	// list all the Competences in the database
 
-            c.setList(list);
-            Competence c_ = competenceRepository.save(c);
-            return new ResponseEntity<>(c_, HttpStatus.CREATED);
-        }catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+	@GetMapping("/all")
+	public List<Competence> getall() {
+		List<Competence> list = new ArrayList<>();
+		competenceRepository.findAll().forEach(list::add);
+		return list;
+	}
 
-    // list all the Competences in the database
+	// Get one candidate's competence from his id
+	@GetMapping("/candidat/{idCandidat}")
+	public List<Competence> getone(@PathVariable("idCandidat") String idCandidat) {
+		List <Competence> list = new ArrayList<>();
+		competenceRepository.findByIdCandidat(idCandidat).forEach(list::add);
+		return  list;
+	}
 
-    @GetMapping("")
-    public List<Competence> getall(){
-        List<Competence> list = new ArrayList<>();
-        competenceRepository.findAll().forEach(list::add);
-        return list;
-    }
+	// get one candidate's competence by the competence id
 
-    //Get one candidate's competence from his id
-    @GetMapping("/{idCandiat}")
-    public Competence getone(@PathVariable("idCandidat") String idCandidat){
-        Competence c = competenceRepository.findByIdCandidat(idCandidat);
-        return c;
-    }
+	@GetMapping("/{id}")
+	public Competence GetCompetence(@PathVariable String id) {
+		return competenceRepository.findByid(id);
+	}
 
-    //get one candidate's competence by the competence id
-    @GetMapping("/{id}")
-    public Optional<Competence> getOneByid(@PathVariable("id") String id){
-        Optional<Competence> c = competenceRepository.findById(id);
-        return c;
-    }
+	@DeleteMapping("/{id}")
+	public void deleteCompetence(@PathVariable("id") String id) {
+		competenceRepository.deleteById(id);
+	}
 
-    // delete by id
+	// delete all data
 
-    @DeleteMapping("/{id}")
-    public void deleteCompetence(@PathVariable("id") String id){
-        competenceRepository.deleteById(id);
-    }
-
-    // delete all data
-
-    @DeleteMapping("")
-    public void deleteAll(){
-        competenceRepository.deleteAll();
-    }
-
-
-
-
+	@DeleteMapping("/")
+	public void deleteAll() {
+		competenceRepository.deleteAll();
+	}
 
 }

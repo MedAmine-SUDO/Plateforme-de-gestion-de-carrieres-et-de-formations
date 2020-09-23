@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "akrem.app.jwtSecret",
+    "type": "java.lang.String",
+    "description": "A description for 'akrem.app.jwtSecret'"
+  },
+  {
+    "name": "akrem.app.jwtExpirationMs",
+    "type": "java.lang.String",
+    "description": "A description for 'akrem.app.jwtExpirationMs'"
+  },
+  {
+    "name": "akrem.app.jwtSecret",
+    "type": "java.lang.String",
+    "description": "A description for 'akrem.app.jwtSecret'"
+  },
+  {
+    "name": "akrem.app.jwtSecret",
+    "type": "java.lang.String",
+    "description": "A description for 'akrem.app.jwtSecret'"
+  }
+]}

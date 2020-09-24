@@ -8,8 +8,6 @@ import GridItem from "../../../components/Grid/GridItem.js";
 import Footer from "../../../components/Footer/Footer.js";
 import NavPills from "../../../components/NavPills/NavPills.js";
 import Warning from "@material-ui/icons/Warning";
-import Check from "@material-ui/icons/Check";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import SnackbarContent from "../../../components/Snackbar/SnackbarContent.js";
 //import Dashboard from "@material-ui/icons/Dashboard";
 //import Schedule from "@material-ui/icons/Schedule";
@@ -30,9 +28,6 @@ function RessourcePage() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [alert, setAlert] = useState(null);
-  const [alertAdd, setAlertAdd] = useState(null);
-  const [alertUpdate, setAlertUpdate] = useState(null);
-  const [alertDelete, setAlertDelete] = useState(null);
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
   const [file, setFile] = useState("");

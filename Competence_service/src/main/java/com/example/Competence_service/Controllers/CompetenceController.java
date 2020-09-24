@@ -4,6 +4,7 @@ import com.example.Competence_service.CvReader.CvReader;
 import com.example.Competence_service.Models.Competence;
 import com.example.Competence_service.Repositories.CompetenceRepository;
 
+import com.example.Competence_service.convertCsv.CsvToList;
 import io.swagger.annotations.Api;
 
 
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -31,6 +33,14 @@ public class CompetenceController {
 	public ResponseEntity<Competence> add(@RequestBody Competence competence) {
 		try {
 			Competence c_ = competenceRepository.save(competence);
+
+			//update the csvFile (dataset)
+
+			/*List<String> list;
+			list = competence.getList();
+			CsvToList csv = new CsvToList();
+			csv.updateCsvFile(list);*/
+
 			return new ResponseEntity<>(c_, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -91,5 +101,22 @@ public class CompetenceController {
 	public void deleteAll() {
 		competenceRepository.deleteAll();
 	}
+
+	//update Competences
+
+	@PutMapping("/update/{id}")
+	public ResponseEntity<Competence> updateCompetence(@PathVariable("id") String id,@RequestBody Competence competence){
+
+		Optional<Competence> comdata = competenceRepository.findById(id);
+		if (comdata.isPresent()){
+			Competence c = comdata.get();
+			c.setIdCandidat(competence.getIdCandidat());
+			c.setList(competence.getList());
+			return new ResponseEntity<>(competenceRepository.save(c),HttpStatus.OK);
+		}
+		else
+			return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+
 
 }

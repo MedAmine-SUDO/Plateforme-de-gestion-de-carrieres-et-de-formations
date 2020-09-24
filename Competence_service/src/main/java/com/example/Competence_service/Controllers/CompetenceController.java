@@ -4,9 +4,7 @@ import com.example.Competence_service.CvReader.CvReader;
 import com.example.Competence_service.Models.Competence;
 import com.example.Competence_service.Repositories.CompetenceRepository;
 
-import com.example.Competence_service.convertCsv.CsvToList;
 import io.swagger.annotations.Api;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -48,11 +45,10 @@ public class CompetenceController {
 	}
 
 	@PostMapping("/cv")
-	public ResponseEntity<Competence> addfromcv(@RequestParam("idCandidat") String idCandidat,
+	public ResponseEntity<Competence> addfromcv(
 			@RequestParam("file") MultipartFile file) {
 		try {
 			Competence c = new Competence();
-			c.setIdCandidat(idCandidat);
 
 			// call the detection algorithm
 			CvReader cvReader = new CvReader();
@@ -76,18 +72,18 @@ public class CompetenceController {
 	}
 
 	// Get one candidate's competence from his id
-	@GetMapping("/candidat/{idCandidat}")
-	public List<Competence> getone(@PathVariable("idCandidat") String idCandidat) {
-		List <Competence> list = new ArrayList<>();
-		competenceRepository.findByIdCandidat(idCandidat).forEach(list::add);
-		return  list;
-	}
+//	@GetMapping("/candidat/{idCandidat}")
+//	public List<Competence> getone(@PathVariable("idCandidat") String idCandidat) {
+//		List <Competence> list = new ArrayList<>();
+//		competenceRepository.findByIdCandidat(idCandidat).forEach(list::add);
+//		return  list;
+//	}
 
 	// get one candidate's competence by the competence id
 
 	@GetMapping("/{id}")
 	public Competence GetCompetence(@PathVariable String id) {
-		return competenceRepository.findByid(id);
+		return competenceRepository.findById(id).orElse(null);
 	}
 
 	@DeleteMapping("/{id}")
@@ -103,19 +99,12 @@ public class CompetenceController {
 	}
 
 	//update Competences
-
-	@PutMapping("/update/{id}")
-	public ResponseEntity<Competence> updateCompetence(@PathVariable("id") String id,@RequestBody Competence competence){
-
-		Optional<Competence> comdata = competenceRepository.findById(id);
-		if (comdata.isPresent()){
-			Competence c = comdata.get();
-			c.setIdCandidat(competence.getIdCandidat());
-			c.setList(competence.getList());
-			return new ResponseEntity<>(competenceRepository.save(c),HttpStatus.OK);
-		}
-		else
-			return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	@PutMapping("/")
+	public Competence putCompetence(@RequestBody Competence newCompetence) {
+		Competence oldCompetence = competenceRepository.findById(newCompetence.getId()).orElse(null);
+		oldCompetence.setId(newCompetence.getId());
+		oldCompetence.setList(newCompetence.getList());
+		return competenceRepository.save(oldCompetence);
 	}
 
 

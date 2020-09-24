@@ -29,8 +29,7 @@ function CompetenceList() {
   const [state, setState] = useState({
     columns: [
       { title: "Id", field: "id" },
-      { title: "Id Candidat", field: "idCandidat" },
-      { title: "list", field: "list.join( )" },
+      { title: "list", field: "list" },
     ],
     data: [],
   });
@@ -62,7 +61,7 @@ function CompetenceList() {
     setAlertAdd(null);
     setAlertUpdate(null);
     setAlertDelete(null);
-    if (!newData.list[0]) {
+    if (!newData.list) {
       setAlertAdd(
         <SnackbarContent
           message={
@@ -76,7 +75,7 @@ function CompetenceList() {
         />
       );
     } else {
-      let list = [newData.list[0]];
+      let list = newData.list.split(',');
       dispatch(
         competencePostData({
           list,
@@ -116,7 +115,6 @@ function CompetenceList() {
     setAlertAdd(null);
     setAlertUpdate(null);
     setAlertDelete(null);
-    console.log(newData, oldData);
     if (!newData.list[0]) {
       setAlertUpdate(
         <SnackbarContent
@@ -132,7 +130,7 @@ function CompetenceList() {
       );
     } else {
       let id = oldData.id;
-      let list = [newData.list[0]];
+      let list = newData.list.split(',');
       dispatch(
         competenceUpdateData({
           id,
@@ -245,7 +243,7 @@ function CompetenceList() {
               ),
             },
             {
-              tabButton: "Competences Settings",
+              tabButton: "Add Competence with CV file",
               tabIcon: Schedule,
               tabContent: (
                 <>

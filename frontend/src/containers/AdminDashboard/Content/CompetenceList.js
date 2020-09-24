@@ -30,7 +30,7 @@ function CompetenceList() {
     columns: [
       { title: "Id", field: "id" },
       { title: "Id Candidat", field: "idCandidat" },
-      { title: "list", field: "list.join()" },
+      { title: "list", field: "list.join( )" },
     ],
     data: [],
   });

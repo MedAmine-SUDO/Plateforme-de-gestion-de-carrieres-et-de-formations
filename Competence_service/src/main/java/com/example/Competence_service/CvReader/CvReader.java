@@ -47,7 +47,6 @@ public class CvReader {
             pd = PDDocument.load(pdf);
             System.out.println(pd.getNumberOfPages());
             System.out.println(pd.isEncrypted());
-            pd.save("CopyOfBill.pdf"); // Creates a copy called "CopyOfInvoice.pdf"
             PDFTextStripper stripper = new PDFTextStripper();
             stripper.setStartPage(1); //Start extracting from page 3
             stripper.setEndPage(1); //Extract till page 5

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  formationDeleteData,
-  formationGetAll,
-  formationPostData,
-  formationUpdateData,
-} from "../../../actions/FormationActions";
+  competenceDeleteData,
+  competenceGetAll,
+  competencePostData,
+  competenceUpdateData,
+} from "../../../actions/CompetenceActions";
 import MaterialTable from "material-table";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -19,9 +19,9 @@ import Check from "@material-ui/icons/Check";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SnackbarContent from "../../../components/Snackbar/SnackbarContent.js";
 
-function FormationList() {
+function CompetenceList() {
   const dispatch = useDispatch();
-  const formationData = useSelector((state) => state.formation);
+  const competenceData = useSelector((state) => state.competence);
   const [alert, setAlert] = useState(null);
   const [alertAdd, setAlertAdd] = useState(null);
   const [alertUpdate, setAlertUpdate] = useState(null);
@@ -29,25 +29,13 @@ function FormationList() {
   const [state, setState] = useState({
     columns: [
       { title: "Id", field: "id" },
-      { title: "Title", field: "title" },
-      { title: "Description", field: "description" },
-      //{ title: "idFormateurs", field: "idFormateurs[0]" },
-      { title: "Niveau", field: "niveau" },
-      //{ title: "Competence", field: "competence[0]" },
-      { title: "Begin Date", field: "beginDate", type: "date" },
-      { title: "End Date", field: "endDate", type: "date" },
-      { title: "Hours", field: "nbrHours", type: "numeric" },
-      { title: "Price", field: "price", type: "numeric" },
-      {
-        title: "Type",
-        field: "type",
-        lookup: { "a distance": "a distance", "presentiel": "presentiel" },
-      },
+      { title: "Id Candidat", field: "idCandidat" },
+      { title: "list", field: "list.join()" },
     ],
     data: [],
   });
   useEffect(() => {
-    dispatch(formationGetAll()).then((res) => {
+    dispatch(competenceGetAll()).then((res) => {
       if (res) {
         setState({
           columns: state.columns,
@@ -69,20 +57,12 @@ function FormationList() {
         );
     });
   }, [dispatch, state.columns]);
-  const addFormation = (newData) => {
+  const addCompetence = (newData) => {
     setAlert(null);
     setAlertAdd(null);
     setAlertUpdate(null);
     setAlertDelete(null);
-    if (
-      !newData.title ||
-      !newData.description ||
-      !newData.niveau ||
-      !newData.beginDate ||
-      !newData.endDate ||
-      !newData.nbrHours ||
-      !newData.type
-    ) {
+    if (!newData.list[0]) {
       setAlertAdd(
         <SnackbarContent
           message={
@@ -96,24 +76,10 @@ function FormationList() {
         />
       );
     } else {
-      let title = newData.title;
-      let description = newData.description;
-      let niveau = newData.niveau;
-      let beginDate = newData.beginDate;
-      let endDate = newData.endDate;
-      let nbrHours = newData.nbrHours;
-      let price = newData.price;
-      let type = newData.type;
+      let list = [newData.list[0]];
       dispatch(
-        formationPostData({
-          title,
-          description,
-          niveau,
-          beginDate,
-          endDate,
-          nbrHours,
-          price,
-          type,
+        competencePostData({
+          list,
         })
       ).then((res) => {
         if (!res)
@@ -134,7 +100,7 @@ function FormationList() {
             <SnackbarContent
               message={
                 <span>
-                  <b>SUCCESS ALERT:</b> Formation Added...
+                  <b>SUCCESS ALERT:</b> Competence Added...
                 </span>
               }
               close
@@ -145,21 +111,13 @@ function FormationList() {
       });
     }
   };
-  const updateFormation = (newData, oldData) => {
+  const updateCompetence = (newData, oldData) => {
     setAlert(null);
     setAlertAdd(null);
     setAlertUpdate(null);
     setAlertDelete(null);
-    console.log(newData, oldData)
-    if (
-      !newData.title ||
-      !newData.description ||
-      !newData.niveau ||
-      !newData.beginDate ||
-      !newData.endDate ||
-      !newData.nbrHours ||
-      !newData.type
-    ) {
+    console.log(newData, oldData);
+    if (!newData.list[0]) {
       setAlertUpdate(
         <SnackbarContent
           message={
@@ -174,28 +132,15 @@ function FormationList() {
       );
     } else {
       let id = oldData.id;
-      let title = newData.title;
-      let description = newData.description;
-      let niveau = newData.niveau;
-      let beginDate = newData.beginDate;
-      let endDate = newData.endDate;
-      let nbrHours = newData.nbrHours;
-      let price = newData.price;
-      let type = newData.type;
+      let list = [newData.list[0]];
       dispatch(
-        formationUpdateData({id,
-          title,
-          description,
-          niveau,
-          beginDate,
-          endDate,
-          nbrHours,
-          price,
-          type,
+        competenceUpdateData({
+          id,
+          list,
         })
       ).then((res) => {
         if (!res)
-        setAlertUpdate(
+          setAlertUpdate(
             <SnackbarContent
               message={
                 <span>
@@ -208,11 +153,11 @@ function FormationList() {
             />
           );
         else
-        setAlertUpdate(
+          setAlertUpdate(
             <SnackbarContent
               message={
                 <span>
-                  <b>SUCCESS ALERT:</b> Formation Updated...
+                  <b>SUCCESS ALERT:</b> Competence Updated...
                 </span>
               }
               close
@@ -223,8 +168,8 @@ function FormationList() {
       });
     }
   };
-  const deleteFormation = (oldData) => {
-    dispatch(formationDeleteData(oldData.id)).then((res) => {
+  const deleteCompetence = (oldData) => {
+    dispatch(competenceDeleteData(oldData.id)).then((res) => {
       setAlert(null);
       setAlertAdd(null);
       setAlertUpdate(null);
@@ -234,7 +179,7 @@ function FormationList() {
           <SnackbarContent
             message={
               <span>
-                <b>SUCCESS ALERT:</b> Formation Deleted...
+                <b>SUCCESS ALERT:</b> Competence Deleted...
               </span>
             }
             close
@@ -257,7 +202,7 @@ function FormationList() {
         );
     });
   };
-  if (formationData.loading) return <CircularProgress />;
+  if (competenceData.loading) return <CircularProgress />;
   else
     return (
       <>
@@ -269,7 +214,7 @@ function FormationList() {
           color="adminDashboard"
           tabs={[
             {
-              tabButton: "Formations List",
+              tabButton: "Competences List",
               tabIcon: Dashboard,
               tabContent: (
                 <>
@@ -282,17 +227,17 @@ function FormationList() {
                       onRowAdd: (newData) =>
                         new Promise((resolve) => {
                           resolve();
-                          addFormation(newData);
+                          addCompetence(newData);
                         }),
                       onRowUpdate: (newData, oldData) =>
                         new Promise((resolve) => {
                           resolve();
-                          updateFormation(newData, oldData);
+                          updateCompetence(newData, oldData);
                         }),
                       onRowDelete: (oldData) =>
                         new Promise((resolve) => {
                           resolve();
-                          deleteFormation(oldData);
+                          deleteCompetence(oldData);
                         }),
                     }}
                   />
@@ -300,7 +245,7 @@ function FormationList() {
               ),
             },
             {
-              tabButton: "Formations Settings",
+              tabButton: "Competences Settings",
               tabIcon: Schedule,
               tabContent: (
                 <>
@@ -314,8 +259,8 @@ function FormationList() {
     );
 }
 
-FormationList.propTypes = {
+CompetenceList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(stylesContent)(FormationList);
+export default withStyles(stylesContent)(CompetenceList);

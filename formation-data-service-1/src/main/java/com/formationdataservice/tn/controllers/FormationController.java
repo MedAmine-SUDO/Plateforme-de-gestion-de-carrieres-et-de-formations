@@ -72,7 +72,7 @@ public class FormationController {
 		oldFormation.setDescription(newFormation.getDescription());
 		oldFormation.setIdFormateurs(newFormation.getIdFormateurs());
 		oldFormation.setNiveau(newFormation.getNiveau());
-		oldFormation.setCompetence(newFormation.getCompetence());
+		oldFormation.setIdCompetence(newFormation.getIdCompetence());
 		oldFormation.setBeginDate(newFormation.getBeginDate());
 		oldFormation.setEndDate(newFormation.getEndDate());
 		oldFormation.setNbrHours(newFormation.getNbrHours());

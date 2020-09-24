@@ -1,10 +1,6 @@
 package com.formationdataservice.tn.models;
 
-import java.util.Arrays;
 import java.util.Date;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -25,11 +21,11 @@ public class Formation {
 
 	private String description;
 
-	private String[] idFormateurs;
+	private String idFormateurs;
 
 	private String niveau;
 
-	private String[] competence;
+	private String idCompetence;
 
 	private Date beginDate;
 
@@ -65,28 +61,12 @@ public class Formation {
 		this.description = description;
 	}
 
-	public String[] getIdFormateurs() {
-		return idFormateurs;
-	}
-
-	public void setIdFormateurs(String[] idFormateurs) {
-		this.idFormateurs = idFormateurs;
-	}
-
 	public String getNiveau() {
 		return niveau;
 	}
 
 	public void setNiveau(String niveau) {
 		this.niveau = niveau;
-	}
-
-	public String[] getCompetence() {
-		return competence;
-	}
-
-	public void setCompetence(String[] competence) {
-		this.competence = competence;
 	}
 
 	public Date getBeginDate() {
@@ -129,12 +109,28 @@ public class Formation {
 		this.type = type;
 	}
 
+	public String getIdFormateurs() {
+		return idFormateurs;
+	}
+
+	public void setIdFormateurs(String idFormateurs) {
+		this.idFormateurs = idFormateurs;
+	}
+
+	public String getIdCompetence() {
+		return idCompetence;
+	}
+
+	public void setIdCompetence(String idCompetence) {
+		this.idCompetence = idCompetence;
+	}
+
 	@Override
 	public String toString() {
 		return "Formation [id=" + id + ", title=" + title + ", description=" + description + ", idFormateurs="
-				+ Arrays.toString(idFormateurs) + ", niveau=" + niveau + ", competence=" + Arrays.toString(competence)
-				+ ", beginDate=" + beginDate + ", endDate=" + endDate + ", nbrHours=" + nbrHours + ", price=" + price
-				+ ", type=" + type + "]";
+				+ idFormateurs + ", niveau=" + niveau + ", idCompetence=" + idCompetence + ", beginDate=" + beginDate
+				+ ", endDate=" + endDate + ", nbrHours=" + nbrHours + ", price=" + price + ", type=" + type + "]";
 	}
+
 
 }

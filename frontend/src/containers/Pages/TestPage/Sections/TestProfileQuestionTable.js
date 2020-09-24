@@ -10,7 +10,7 @@ import {
   testNiveauUpdateQuestion,
 } from "../../../../actions/TestNiveauActions";
 
-export default function TestNiveauQuestionTable() {
+export default function TestProfileQuestionTable() {
   const [state, setState] = React.useState({
     columns: [
       { title: "Question number", field: "questionNbr", type: "numeric" },
@@ -120,8 +120,6 @@ export default function TestNiveauQuestionTable() {
 
   const handleRowUpdate = (newData, oldData, resolve) => {
 
-    console.log(newData)
-
     let questionToSend = {
       id: oldData.id,
       questionNbr: newData.questionNbr,
@@ -165,53 +163,8 @@ export default function TestNiveauQuestionTable() {
   };
 
   useEffect(() => {
-    dispatch(testNiveauGetQuestions()).then(res => {
-      res.data.forEach(question => {
-        let newQuestion = {
-          id: "",
-          questionNbr: "",
-          questionContent: "",
-          firstAnswer: "",
-          secondAnswer: "",
-          thirdAnswer: "",
-          fourthAnswer: "",
-          difficulty: "",
-        };
-
-        switch (question.difficulty) {
-          case "BASIC":
-            question.difficulty = 1;
-            break;
-          case "INTERMEDIATE":
-            question.difficulty = 2;
-            break;
-          case "HARD":
-            question.difficulty = 3;
-            break;
-          case "PROFESSIONAL":
-            question.difficulty = 4;
-            break;
-          default:
-            break;
-        }
-
-        newQuestion.id = question.id;
-        newQuestion.questionNbr = question.questionNbr;
-        newQuestion.questionContent = question.questionContent;
-        newQuestion.difficulty = question.difficulty;
-        newQuestion.firstAnswer = question.answers[0].answerContent;
-        newQuestion.secondAnswer = question.answers[1].answerContent;
-        newQuestion.thirdAnswer = question.answers[2].answerContent;
-        newQuestion.fourthAnswer = question.answers[3].answerContent;
-
-        setState((prevState) => {
-          const data = [...prevState.data];
-          data.push(newQuestion);
-          return { ...prevState, data };
-        });
-      })
-    })
-  }, [dispatch]);
+    
+  }, []);
 
   return (
     <MaterialTable
@@ -222,16 +175,16 @@ export default function TestNiveauQuestionTable() {
       editable={{
         onRowAdd: (newData) =>
           new Promise((resolve) => {
-            handleRowAdd(newData, resolve)
+            handleRowAdd(newData, resolve);
           }),
 
         onRowUpdate: (newData, oldData) =>
           new Promise((resolve) => {
-            handleRowUpdate(newData, oldData, resolve)
+            handleRowUpdate(newData, oldData, resolve);
           }),
         onRowDelete: (oldData) =>
           new Promise((resolve) => {
-            handleRowDelete(oldData, resolve)
+            handleRowDelete(oldData, resolve);
           }),
       }}
     />

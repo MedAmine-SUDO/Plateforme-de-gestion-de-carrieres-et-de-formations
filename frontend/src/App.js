@@ -50,12 +50,11 @@ function App() {
           <NavBar />
         </nav>
         <Switch>
-<<<<<<< HEAD
+
 
           {/* Landing */}
-=======
+
           {/* Landing page*/}
->>>>>>> d6d6b018a4f7c28d7d607f56044352239a59cad5
           <Route path="/" exact component={LandingPage} />
           {/* dashboard page*/}
           <Route path="/dashboard" exact component={DashboardPage} />

@@ -37,12 +37,13 @@ const apiCalltestNiveau = (url, method, body = {}, token = '') => axios({
     ...composeToken(token)
   }
 });
-const apiCallRessource = (url, method, body = {}, token = '') => axios({
+const apiCallRessource = (url, method, body = {}, config={} ,token = '') => axios({
   method,
-  url: `http://localhost:8092/api${url}`,
+  url: `http://localhost:8092/api/ressource${url}`,
   data: body,
   headers: {
-    ...composeToken(token)
+    ...composeToken(token),
+    config
   }
 });
 

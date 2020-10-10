@@ -6,7 +6,6 @@ import com.example.Competence_service.Repositories.CompetenceRepository;
 
 import io.swagger.annotations.Api;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,6 +30,14 @@ public class CompetenceController {
 	public ResponseEntity<Competence> add(@RequestBody Competence competence) {
 		try {
 			Competence c_ = competenceRepository.save(competence);
+
+			//update the csvFile (dataset)
+
+			/*List<String> list;
+			list = competence.getList();
+			CsvToList csv = new CsvToList();
+			csv.updateCsvFile(list);*/
+
 			return new ResponseEntity<>(c_, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -38,11 +45,10 @@ public class CompetenceController {
 	}
 
 	@PostMapping("/cv")
-	public ResponseEntity<Competence> addfromcv(@RequestParam("idCandidat") String idCandidat,
+	public ResponseEntity<Competence> addfromcv(
 			@RequestParam("file") MultipartFile file) {
 		try {
 			Competence c = new Competence();
-			c.setIdCandidat(idCandidat);
 
 			// call the detection algorithm
 			CvReader cvReader = new CvReader();
@@ -66,18 +72,18 @@ public class CompetenceController {
 	}
 
 	// Get one candidate's competence from his id
-	@GetMapping("/candidat/{idCandidat}")
-	public List<Competence> getone(@PathVariable("idCandidat") String idCandidat) {
-		List <Competence> list = new ArrayList<>();
-		competenceRepository.findByIdCandidat(idCandidat).forEach(list::add);
-		return  list;
-	}
+//	@GetMapping("/candidat/{idCandidat}")
+//	public List<Competence> getone(@PathVariable("idCandidat") String idCandidat) {
+//		List <Competence> list = new ArrayList<>();
+//		competenceRepository.findByIdCandidat(idCandidat).forEach(list::add);
+//		return  list;
+//	}
 
 	// get one candidate's competence by the competence id
 
 	@GetMapping("/{id}")
 	public Competence GetCompetence(@PathVariable String id) {
-		return competenceRepository.findByid(id);
+		return competenceRepository.findById(id).orElse(null);
 	}
 
 	@DeleteMapping("/{id}")
@@ -91,5 +97,15 @@ public class CompetenceController {
 	public void deleteAll() {
 		competenceRepository.deleteAll();
 	}
+
+	//update Competences
+	@PutMapping("/")
+	public Competence putCompetence(@RequestBody Competence newCompetence) {
+		Competence oldCompetence = competenceRepository.findById(newCompetence.getId()).orElse(null);
+		oldCompetence.setId(newCompetence.getId());
+		oldCompetence.setList(newCompetence.getList());
+		return competenceRepository.save(oldCompetence);
+	}
+
 
 }

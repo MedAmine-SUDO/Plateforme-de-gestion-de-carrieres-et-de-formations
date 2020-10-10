@@ -4,10 +4,8 @@ import com.opencsv.CSVWriter;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
+import java.util.*;
 
 public class CsvToList {
 
@@ -54,13 +52,15 @@ public class CsvToList {
     //update the csv file with the new competences
     public void updateCsvFile(List<String> list) {
 
-        String compSkill = "";
+        //try number 1
+       /* String compSkill = "";
         List<String> allComp = new ArrayList<>();
-        ArrayList<String> listOfStrings = new ArrayList<>(list.size());
+
         try {
 
             //read computer_skills.csv from resources file
             File file = new ClassPathResource("computer_skills.csv").getFile();
+
             FileReader csvReader = new FileReader(file);
             BufferedReader br = new BufferedReader(csvReader);
             while ((compSkill = br.readLine()) != null) {
@@ -71,13 +71,57 @@ public class CsvToList {
         }
         for (String s : list) {
             if (!allComp.contains(s)) {
+
                 allComp.add(s);
+
             }
         }
         //update computerskills.csv
-        /*
-        to be added in the next commit
-         */
+            try {
+                File file1 = new ClassPathResource("computer_skills.csv").getFile();
+
+                FileWriter fileWriter = new FileWriter(file1,true);
+                for(String s: allComp){
+                    fileWriter.write(s);
+                }
+                fileWriter.flush();
+                fileWriter.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }*/
+        //try number 2
+        /*String skill;
+        try {
+            File file1 = new ClassPathResource("computer_skills.csv").getFile();
+            FileReader csvReader = new FileReader(file1);
+            BufferedReader br = new BufferedReader(csvReader);
+            FileWriter writer = new FileWriter(file1,true);
+            BufferedWriter out = new BufferedWriter(writer);
+
+
+            while ((skill = br.readLine()) != null ) {
+
+                for(String s :list) {
+
+                        if (!skill.equals(s)) {
+
+                            writer.write(s);
+                            //out.write(s);
+                            //out.newline(s);
+
+                        }
+                    }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+        //try number 3
+
+
+
+
+
 
     }
 }

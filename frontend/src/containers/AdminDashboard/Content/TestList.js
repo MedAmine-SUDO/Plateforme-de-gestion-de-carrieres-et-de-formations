@@ -5,6 +5,7 @@ import { stylesContent } from "../styles/Styles"
 import NavPills from '../../../components/NavPills/NavPills';
 import { AssignmentInd, Toc } from '@material-ui/icons';
 import TestNiveauAdmin from '../../Pages/TestPage/TestNiveauAdmin';
+import TestProfileAdmin from '../../Pages/TestPage/TestProfileAdmin';
 
 function TestList(props) {
 
@@ -20,7 +21,10 @@ function TestList(props) {
           </>
         }, {
           tabButton: "Test de profile d'apprentissage",
-          tabIcon: AssignmentInd
+          tabIcon: AssignmentInd,
+          tabContent:<>
+            <TestProfileAdmin />
+          </>
         }]} />
 
 

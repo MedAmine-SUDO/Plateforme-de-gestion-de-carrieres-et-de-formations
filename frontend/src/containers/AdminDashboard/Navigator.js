@@ -45,9 +45,9 @@ const defaultCategories = [
         link: "/admin_dashboard/profiles",
       },
       {
-        id: "Functions",
+        id: "Competences",
         icon: <SettingsEthernetIcon />,
-        link: "/admin_dashboard",
+        link: "/admin_dashboard/competences",
       },
       {
         id: "ML Kit",

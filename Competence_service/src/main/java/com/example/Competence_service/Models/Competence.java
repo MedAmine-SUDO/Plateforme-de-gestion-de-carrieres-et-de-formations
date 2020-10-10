@@ -10,15 +10,10 @@ public class Competence {
 
     @Id
     private String id;
-    private String idCandidat;
     private List<String> list;
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public void setIdCandidat(String idCandidat) {
-        this.idCandidat = idCandidat;
     }
 
     public void setList(List<String> list) {
@@ -27,10 +22,6 @@ public class Competence {
 
     public String getId() {
         return id;
-    }
-
-    public String getIdCandidat() {
-        return idCandidat;
     }
 
     public List<String> getList() {

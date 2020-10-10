@@ -7,6 +7,4 @@ import java.util.List;
 
 public interface CompetenceRepository extends MongoRepository<Competence,String> {
 
-    List<Competence> findByIdCandidat(String idCandidat);
-    Competence findByid(String id);
 }

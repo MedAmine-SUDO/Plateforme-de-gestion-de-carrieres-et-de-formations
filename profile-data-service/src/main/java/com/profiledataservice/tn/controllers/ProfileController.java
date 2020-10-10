@@ -75,6 +75,7 @@ public class ProfileController {
 		oldProfile.setRegion(newProfile.getRegion());
 		oldProfile.setCountry(newProfile.getCountry());
 		oldProfile.setTelephone(newProfile.getTelephone());
+		oldProfile.setIdCompetence(newProfile.getIdCompetence());
 
 		return profileRepo.save(oldProfile);
 	}

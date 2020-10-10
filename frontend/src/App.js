@@ -5,8 +5,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import NavBar from "./containers/layouts/NavBar";
 import WiemRoutes from "./containers/routes/WiemRoutes";
 import RanimRoutes from "./containers/routes/RanimRoutes";
-import AkremRoutes from "./containers/routes/AkremRoutes";
-import AmineRoutes from "./containers/routes/AmineRoutes";
 import AdminDashboard from "./containers/AdminDashboard/AdminDashboard";
 import SignUp from "./containers/auth/SignUp";
 import SignIn from "./containers/auth/SignIn";
@@ -50,11 +48,7 @@ function App() {
           <NavBar />
         </nav>
         <Switch>
-
-
           {/* Landing */}
-
-          {/* Landing page*/}
           <Route path="/" exact component={LandingPage} />
           {/* dashboard page*/}
           <Route path="/dashboard" exact component={DashboardPage} />

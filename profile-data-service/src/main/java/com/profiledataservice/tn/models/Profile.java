@@ -19,32 +19,33 @@ import lombok.NoArgsConstructor;
 public class Profile {
 	@Id
 	private String id;
-	@NotBlank	
+	 	
 	private String userID;
-	@NotBlank
+	 
 	@Size(max = 20)
 	private String firstName;
-	@NotBlank
+	 
 	@Size(max = 20)
 	private String lastName;
-	@NotBlank
+	 
 	@Size(max = 20)
 	private Date birthDate;
-	@NotBlank
+	 
 	@Size(max = 50)
 	private String address;
-	@NotBlank
+	 
 	@Size(max = 20)
 	private int postCode;
-	@NotBlank
+	 
 	@Size(max = 30)
 	private String region;
-	@NotBlank
+	 
 	@Size(max = 20)
 	private int telephone;
-	@NotBlank
+	 
 	@Size(max = 30)
 	private String country;
+	private String idCompetence;
 	public String getId() {
 		return id;
 	}
@@ -105,10 +106,17 @@ public class Profile {
 	public void setUserID(String userID) {
 		this.userID = userID;
 	}
+	public String getIdCompetence() {
+		return idCompetence;
+	}
+	public void setIdCompetence(String idCompetence) {
+		this.idCompetence = idCompetence;
+	}
 	@Override
 	public String toString() {
 		return "Profile [id=" + id + ", userID=" + userID + ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", birthDate=" + birthDate + ", address=" + address + ", postCode=" + postCode + ", region=" + region
-				+ ", telephone=" + telephone + ", country=" + country + "]";
+				+ ", telephone=" + telephone + ", country=" + country + ", idCompetence=" + idCompetence + "]";
 	}
+	
 }

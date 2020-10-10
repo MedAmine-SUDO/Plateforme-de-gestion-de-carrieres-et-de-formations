@@ -5,7 +5,7 @@ import {
   formationGetAll,
   formationPostData,
   formationUpdateData,
-} from "../../../actions/FomationActions";
+} from "../../../actions/FormationActions";
 import MaterialTable from "material-table";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";

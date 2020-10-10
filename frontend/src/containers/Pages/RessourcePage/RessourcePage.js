@@ -8,8 +8,6 @@ import GridItem from "../../../components/Grid/GridItem.js";
 import Footer from "../../../components/Footer/Footer.js";
 import NavPills from "../../../components/NavPills/NavPills.js";
 import Warning from "@material-ui/icons/Warning";
-import Check from "@material-ui/icons/Check";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import SnackbarContent from "../../../components/Snackbar/SnackbarContent.js";
 //import Dashboard from "@material-ui/icons/Dashboard";
 //import Schedule from "@material-ui/icons/Schedule";
@@ -33,14 +31,11 @@ function RessourcePage() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [alert, setAlert] = useState(null);
-  const [alertAdd, setAlertAdd] = useState(null);
-  const [alertUpdate, setAlertUpdate] = useState(null);
-  const [alertDelete, setAlertDelete] = useState(null);
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
-  const [file, setFile] = useState("");
-  const [image, setImage] = useState("");
-  const [video, setVideo] = useState("");
+  // const [file, setFile] = useState("");
+  // const [image, setImage] = useState("");
+  // const [video, setVideo] = useState("");
   const [ressource,setRessourceData ]= useState(new FormData());
 
   const handleChange = (e, name) => {
@@ -67,11 +62,34 @@ function RessourcePage() {
         break;
     }
   };
-  const handleUploadClick = event =>{
+  const handleUploadClick3 = event =>{
+   
+
+    let video = event.target.files[2];
+    ressource.append('video',video);
+
+
+    setRessourceData(ressource);
+  }
+  const handleUploadClick2 = event =>{
+   
+
+    let image = event.target.files[1];
+    ressource.append('image',image);
+
+
+    setRessourceData(ressource);
+  }
+  const handleUploadClick1 = event =>{
     let file = event.target.files[0];
-    ressource.append('image',file);
-    ressource.append('video',file);
     ressource.append('file',file);
+
+    let image = event.target.files[0];
+    ressource.append('image',image);
+
+    let video = event.target.files[0];
+
+    ressource.append('video',video);
 
     setRessourceData(ressource);
   }
@@ -203,7 +221,7 @@ function RessourcePage() {
                                 inputProps={{
                                   placeholder: "File",
                                 }}
-                                onChange={(e) => handleChange(e, "file")}
+                                onChange={handleUploadClick1}
                               />
                               <br />
                               <br />
@@ -216,7 +234,7 @@ function RessourcePage() {
                                   placeholder: "Photo",
                                 }}
                                 accept='image/*'
-                                onChange={handleUploadClick}
+                                onChange={handleUploadClick2}
                               />
                               <br />
                               <br />
@@ -228,7 +246,7 @@ function RessourcePage() {
                                 inputProps={{
                                   placeholder: "Video",
                                 }}
-                                onChange={(e) => handleChange(e, "video")}
+                                onChange={handleUploadClick3}
                               />
 
                               <br />

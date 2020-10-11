@@ -4,10 +4,10 @@
 Simply choose the service (or services) you want to run and add them to docker-compose.yml and then in the terminal: docker-compose up
 
 ## Docker compose of each service:
- competence-data-service:
-    image: akremzerelli/stage2020:competence-data-service
-    ports:
-      - 8051:8051
+ competence-data-service:  
+    image: akremzerelli/stage2020:competence-data-service  
+    ports:  
+      - 8051:8051  
 
   authentication-service:
     image: akremzerelli/stage2020:authentication-service

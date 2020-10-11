@@ -1,7 +1,8 @@
 # Plateforme-de-gestion-de-carrieres-et-de-formations
 
 # How to run a service using docker compose:
-Simply choose the service (or services) you want to run and add them to docker-compose.yml and then in the terminal: docker-compose up
+Simply choose the service (or services) you want to run and add them to docker-compose.yml and then in the terminal: docker-compose up  
+!! BE CAREFUL with the format (the spaces) of the docker compose file
 
 ## Docker compose of each service:
  competence-data-service:  

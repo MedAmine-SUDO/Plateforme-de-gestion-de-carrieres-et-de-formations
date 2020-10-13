@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from "react";
-import {useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import classNames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "../../../assets/jss/material-kit-react/views/accountPage.js";
@@ -21,7 +21,10 @@ import MaterialTable from "material-table";
 //import axios from 'axios';
 import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
 import PlaylistPlayIcon from "@material-ui/icons/PlaylistPlay";
-import { ressourcePostData, ressourceGetAll } from "../../../actions/RessourceActions.js";
+import {
+  ressourcePostData,
+  ressourceGetAll,
+} from "../../../actions/RessourceActions.js";
 const useStyles = makeStyles(styles);
 
 function RessourcePage() {
@@ -30,9 +33,10 @@ function RessourcePage() {
   const [alert, setAlert] = useState(null);
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
-  const [file, setFile] = useState("");
-  const [image, setImage] = useState("");
-  const [video, setVideo] = useState("");
+  // const [file, setFile] = useState("");
+  // const [image, setImage] = useState("");
+  // const [video, setVideo] = useState("");
+  const [ressource,setRessourceData ]= useState(new FormData());
 
   const handleChange = (e, name) => {
     const ressource = {};
@@ -45,34 +49,65 @@ function RessourcePage() {
       case "title":
         setTitle(ressource.title);
         break;
-        case "file":
+      case "file":
         setFile(ressource.file);
         break;
-        case "image":
+      case "image":
         setImage(ressource.image);
         break;
-        case "video":
+      case "video":
         setVideo(ressource.video);
         break;
       default:
         break;
     }
   };
+  const handleUploadClick3 = event =>{
+   
+
+    let video = event.target.files[2];
+    ressource.append('video',video);
+
+
+    setRessourceData(ressource);
+  }
+  const handleUploadClick2 = event =>{
+   
+
+    let image = event.target.files[1];
+    ressource.append('image',image);
+
+
+    setRessourceData(ressource);
+  }
+  const handleUploadClick1 = event =>{
+    let file = event.target.files[0];
+    ressource.append('file',file);
+
+    let image = event.target.files[0];
+    ressource.append('image',image);
+
+    let video = event.target.files[0];
+
+    ressource.append('video',video);
+
+    setRessourceData(ressource);
+  }
   const handleRessource = async (e) => {
     e.preventDefault();
-      dispatch(ressourcePostData({description , title ,image , file, video}))
+    ressource.append('title',title);
+    ressource.append('description',description);
+    dispatch(
+      ressourcePostData(ressource) 
+    ).then((res) => console.log(res));
   };
 
   const [state, setState] = useState({
     columns: [
-      { title: 'title', field: 'title' },
-      { title: 'description', field: 'description' }
-  
-     
+      { title: "title", field: "title" },
+      { title: "description", field: "description" },
     ],
-    data: [
-     { title:"Has", description:"hfhgé"}
-    ],
+    data: [],
   });
   useEffect(() => {
     dispatch(ressourceGetAll()).then((res) => {
@@ -99,6 +134,7 @@ function RessourcePage() {
   }, [dispatch, state.columns]);
   return (
     <div>
+      {alert}
       <div>
         <div className={classNames(classes.main, classes.mainRaised)}>
           <div>
@@ -122,31 +158,8 @@ function RessourcePage() {
                               title="My Ressources"
                               columns={state.columns}
                               data={state.data}
+                            
                               editable={{
-                                onRowAdd: (newData) =>
-                                  new Promise((resolve) => {
-                                    setTimeout(() => {
-                                      resolve();
-                                      setState((prevState) => {
-                                        const data = [...prevState.data];
-                                        data.push(newData);
-                                        return { ...prevState, data };
-                                      });
-                                    }, 600);
-                                  }),
-                                onRowUpdate: (newData, oldData) =>
-                                  new Promise((resolve) => {
-                                    setTimeout(() => {
-                                      resolve();
-                                      if (oldData) {
-                                        setState((prevState) => {
-                                          const data = [...prevState.data];
-                                          data[data.indexOf(oldData)] = newData;
-                                          return { ...prevState, data };
-                                        });
-                                      }
-                                    }, 600);
-                                  }),
                                 onRowDelete: (oldData) =>
                                   new Promise((resolve) => {
                                     setTimeout(() => {
@@ -208,21 +221,20 @@ function RessourcePage() {
                                 inputProps={{
                                   placeholder: "File",
                                 }}
-                                onChange={(e) => handleChange(e, "file")}
-
+                                onChange={handleUploadClick1}
                               />
                               <br />
                               <br />
                               <strong>Add Photo :</strong>
-                              <Input
+                              <input
                                 id="idPhoto"
                                 name="image"
                                 type="file"
                                 inputProps={{
                                   placeholder: "Photo",
                                 }}
-                                onChange={(e) => handleChange(e, "image")}
-
+                                accept='image/*'
+                                onChange={handleUploadClick2}
                               />
                               <br />
                               <br />
@@ -234,8 +246,7 @@ function RessourcePage() {
                                 inputProps={{
                                   placeholder: "Video",
                                 }}
-                                onChange={(e) => handleChange(e, "video")}
-
+                                onChange={handleUploadClick3}
                               />
 
                               <br />

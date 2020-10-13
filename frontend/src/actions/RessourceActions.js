@@ -16,12 +16,17 @@ export const ressourceGetAll = () => async (dispatch) => {
     dispatch({ type: "RESSOURCE_END_LOADING" });
   }
 };
+const config= {
+ 
+    'content-type': 'multipart/form-data'
+  
+}
 export const ressourcePostData = (ressource) => async (dispatch) => {
   try {
-    console.log(ressource)
+    console.log('here')
 
     dispatch({ type: "RESSOURCE_LOADING" });
-    const res = await apiCallRessource("/add",ressource ,"POST");
+    const res = await apiCallRessource("/add","post",ressource,config);
 
     dispatch({ type: "RESSOURCE_GET_DATA", payload: res.data });
 
@@ -35,7 +40,7 @@ export const ressourceUpdateData = (ressource) => async (dispatch) => {
   try {
     dispatch({ type: "RESSOURCE_LOADING" });
 
-  const res = await apiCallRessource("/update", "put",ressource);
+  const res = await apiCallRessource("/update", "put",ressource,config);
     dispatch({ type: "RESSOURCE_GET_DATA", payload: res.data });
     return res;
   } catch (err) {

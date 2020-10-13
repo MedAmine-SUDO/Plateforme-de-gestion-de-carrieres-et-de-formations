@@ -32,20 +32,20 @@ const apiCallFormation = (url, method, body = {}, token = "") =>
       ...composeToken(token),
     },
   });
-
+const apiCallRessource = (url, method, body = {}, config = {}, token = "") =>
+  axios({
+    method,
+    url: `http://localhost:8092/api/ressource${url}`,
+    data: body,
+    headers: {
+      ...composeToken(token),
+      config,
+    },
+  });
 const apiCalltestNiveau = (url, method, body = {}, token = "") =>
   axios({
     method,
     url: `http://localhost:8060/api/testNiveau${url}`,
-    data: body,
-    headers: {
-      ...composeToken(token),
-    },
-  });
-const apiCallRessource = (url, method, body = {}, token = "") =>
-  axios({
-    method,
-    url: `http://localhost:8092/api${url}`,
     data: body,
     headers: {
       ...composeToken(token),

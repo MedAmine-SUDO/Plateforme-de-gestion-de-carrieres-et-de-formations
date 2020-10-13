@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.io.IOException;
 import org.springframework.http.MediaType;
+import org.springframework.ui.Model;
 
 //import java.io.InputStream;
 //import java.util.ArrayList;
@@ -28,7 +29,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-@CrossOrigin(origins = "*")
 
 @RequestMapping("/api/ressource")
 @Api(value = "RessourceUploadAPI", produces = MediaType.APPLICATION_JSON_VALUE, description = "Upload ressource ")
@@ -51,6 +51,8 @@ private VideoService videoService ;
 //private StorageFileRepository storageFileRepository;
 @Autowired
 private StorageService storageFileService;
+
+@CrossOrigin
 @GetMapping("/all")
 public List <Ressource> GetRessources(){
 	return ressourceRepository.findAll();
@@ -78,7 +80,7 @@ private Ressource addRessource( @RequestParam("image") MultipartFile image,
 		  @RequestParam("video") MultipartFile video, 
 		 @RequestParam("title") String title,
 		 @RequestParam("description") String description,
-		 @RequestParam("file") MultipartFile file) throws IOException {
+		 @RequestParam("file") MultipartFile file,Model model) throws IOException {
 	Ressource ressource=new Ressource();
 	ressource.setDescription(description);
 	
@@ -94,6 +96,7 @@ private Ressource addRessource( @RequestParam("image") MultipartFile image,
 	return ressourceRepository.save(ressource);
 
 }
+@CrossOrigin
 @ApiOperation("update a Ressouce")
 @ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully update a Ressouce"),
 		@ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
@@ -109,11 +112,13 @@ private Ressource PutRessource(@RequestBody Ressource newRessource) {
 	oldRessource.setIdVideo(newRessource.getIdVideo());
 	return oldRessource;
 }
+@CrossOrigin
 @ApiOperation("Delete a Ressouce")
 @ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully Delete a Ressouce"),
 		@ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
 		@ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
 		@ApiResponse(code = 404, message = "The resource  not found") })
+
 @DeleteMapping("/{id}")
 public String DeleteRessource(@PathVariable String id) {
 	ressourceRepository.deleteById(id);

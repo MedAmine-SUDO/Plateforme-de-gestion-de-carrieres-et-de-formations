@@ -59,6 +59,8 @@ public List <Ressource> GetRessources(){
 	
 
 }
+@CrossOrigin
+
 @ApiOperation("Get a Ressouce")
 @ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully Get a Ressouce"),
 		@ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
@@ -167,22 +169,27 @@ public String DeleteRessource(@PathVariable String id) {
 //	return lPhotos;
 //	
 //}
-//
-//@GetMapping("{idP}")
-//public Photo GetPhoto( @PathVariable String idP){
-//	
-//		Photo v= photoService.getPhoto(idP);
-//		
-//	return v;
-//	
-//}
-//@GetMapping("{idV}")
-//public Video GetVideo( @PathVariable String idV) throws IllegalStateException, IOException{
-//	
-//		Video p= videoService.getVideo(idV);
-//		
-//	return p;
-//	
-//}
+
+@CrossOrigin
+@ApiOperation("get a photo")
+@GetMapping("/photo/{idP}")
+public Photo GetPhoto( @PathVariable String idP){
+	
+		Photo v= photoService.getPhoto(idP);
+		
+	return v;
+	
+}
+
+@CrossOrigin
+@ApiOperation("get a video")
+@GetMapping("/video/{idV}")
+public Video GetVideo( @PathVariable String idV) throws IllegalStateException, IOException{
+	
+		Video p= videoService.getVideo(idV);
+		
+	return p;
+	
+}
 
 }

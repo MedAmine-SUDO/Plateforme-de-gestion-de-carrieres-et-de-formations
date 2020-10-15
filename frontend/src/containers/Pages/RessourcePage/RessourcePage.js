@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
 import styles from "../../../assets/jss/material-kit-react/views/accountPage.js";
@@ -7,6 +7,9 @@ import GridContainer from "../../../components/Grid/GridContainer.js";
 import GridItem from "../../../components/Grid/GridItem.js";
 import Footer from "../../../components/Footer/Footer.js";
 import NavPills from "../../../components/NavPills/NavPills.js";
+import Check from "@material-ui/icons/Check";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 import Warning from "@material-ui/icons/Warning";
 import SnackbarContent from "../../../components/Snackbar/SnackbarContent.js";
 //import Dashboard from "@material-ui/icons/Dashboard";
@@ -24,19 +27,28 @@ import PlaylistPlayIcon from "@material-ui/icons/PlaylistPlay";
 import {
   ressourcePostData,
   ressourceGetAll,
+  ressourceDeleteData,
 } from "../../../actions/RessourceActions.js";
+import { tableIcons } from "../../tableFeatures/tableIcons";
+import { useHistory } from "react-router-dom";
+import RessourceDetail from "./RessourceDetail.js";
+
 const useStyles = makeStyles(styles);
 
 function RessourcePage() {
+  const [alertDelete, setAlertDelete] = useState(null);
+  const ressourceData = useSelector((state) => state.ressource);
+
+  const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
   const [alert, setAlert] = useState(null);
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
-  // const [file, setFile] = useState("");
-  // const [image, setImage] = useState("");
-  // const [video, setVideo] = useState("");
-  const [ressource,setRessourceData ]= useState(new FormData());
+  const [setFile] = useState("");
+  const [setImage] = useState("");
+  const [setVideo] = useState("");
+  const [ressource, setRessourceData] = useState(new FormData());
 
   const handleChange = (e, name) => {
     const ressource = {};
@@ -62,44 +74,39 @@ function RessourcePage() {
         break;
     }
   };
-  const handleUploadClick3 = event =>{
-   
-
+  const handleUploadClick3 = (event) => {
     let video = event.target.files[2];
-    ressource.append('video',video);
-
+    ressource.append("video", video);
 
     setRessourceData(ressource);
-  }
-  const handleUploadClick2 = event =>{
-   
-
+    //history.push("/uploadRessource/");
+  };
+  const handleUploadClick2 = (event) => {
     let image = event.target.files[1];
-    ressource.append('image',image);
-
+    ressource.append("image", image);
 
     setRessourceData(ressource);
-  }
-  const handleUploadClick1 = event =>{
+  };
+  const handleUploadClick1 = (event) => {
     let file = event.target.files[0];
-    ressource.append('file',file);
+    ressource.append("file", file);
 
     let image = event.target.files[0];
-    ressource.append('image',image);
+    ressource.append("image", image);
 
     let video = event.target.files[0];
 
-    ressource.append('video',video);
+    ressource.append("video", video);
 
     setRessourceData(ressource);
-  }
+  };
   const handleRessource = async (e) => {
     e.preventDefault();
-    ressource.append('title',title);
-    ressource.append('description',description);
-    dispatch(
-      ressourcePostData(ressource) 
-    ).then((res) => console.log(res));
+    ressource.append("title", title);
+    ressource.append("description", description);
+    dispatch(ressourcePostData(ressource)).then((res) => {
+      console.log(res);
+    });
   };
 
   const [state, setState] = useState({
@@ -109,6 +116,36 @@ function RessourcePage() {
     ],
     data: [],
   });
+  const deleteRessource = (oldData) => {
+    dispatch(ressourceDeleteData(oldData.id)).then((res) => {
+      if (res)
+        setAlertDelete(
+          <SnackbarContent
+            message={
+              <span>
+                <b>SUCCESS ALERT:</b> Formation Deleted...
+              </span>
+            }
+            close
+            color="success"
+            icon={Check}
+          />
+        );
+      else
+        setAlertDelete(
+          <SnackbarContent
+            message={
+              <span>
+                <b>WARNING ALERT:</b> Server ERROR...
+              </span>
+            }
+            close
+            color="warning"
+            icon={Warning}
+          />
+        );
+    });
+  };
   useEffect(() => {
     dispatch(ressourceGetAll()).then((res) => {
       if (res) {
@@ -132,155 +169,174 @@ function RessourcePage() {
         );
     });
   }, [dispatch, state.columns]);
-  return (
-    <div>
-      {alert}
+  if (ressourceData.loading)
+    return (
+      <div className={classNames(classes.main, classes.mainRaised)}>
+        <div>
+          <div className={classes.container}>
+            <CircularProgress />
+          </div>
+        </div>
+      </div>
+    );
+  else
+    return (
       <div>
-        <div className={classNames(classes.main, classes.mainRaised)}>
-          <div>
-            <div className={classes.container}>
-              <GridContainer justify="center">
-                <GridItem xs={12} sm={12}>
-                  <NavPills
-                    color="primary"
-                    horizontal={{
-                      tabsGrid: { xs: 12, sm: 4, md: 4 },
-                      contentGrid: { xs: 12, sm: 8, md: 8 },
-                    }}
-                    tabs={[
-                      {
-                        tabButton: "My Ressources",
-                        tabIcon: PlaylistPlayIcon,
-                        tabContent: (
-                          <>
-                            <h1>My Ressources</h1>
-                            <MaterialTable
-                              title="My Ressources"
-                              columns={state.columns}
-                              data={state.data}
-                            
-                              editable={{
-                                onRowDelete: (oldData) =>
-                                  new Promise((resolve) => {
-                                    setTimeout(() => {
-                                      resolve();
-                                      setState((prevState) => {
-                                        const data = [...prevState.data];
-                                        data.splice(data.indexOf(oldData), 1);
-                                        return { ...prevState, data };
-                                      });
-                                    }, 600);
-                                  }),
-                              }}
-                            />
-                          </>
-                        ),
-                      },
-                      {
-                        tabButton: "Add New Ressource",
-                        tabIcon: PlaylistAddIcon,
-                        tabContent: (
-                          <>
-                            <form onSubmit={handleRessource}>
-                              <h1>Add New Ressource</h1>
+        {alert}
+        <div>
+          <div className={classNames(classes.main, classes.mainRaised)}>
+            <div>
+              <div className={classes.container}>
+                <GridContainer justify="center">
+                  <GridItem xs={12} sm={12}>
+                    <NavPills
+                      color="primary"
+                      horizontal={{
+                        tabsGrid: { xs: 12, sm: 4, md: 4 },
+                        contentGrid: { xs: 12, sm: 8, md: 8 },
+                      }}
+                      tabs={[
+                        {
+                          tabButton: "My Ressources",
+                          tabIcon: PlaylistPlayIcon,
+                          tabContent: (
+                            <>
+                              <h1>My Ressources</h1>
+                              <MaterialTable
+                                title="My Ressources"
+                                columns={state.columns}
+                                data={state.data}
+                                icons={tableIcons}
+                                onRowClick={(e, data) => {
+                                  history.push("/uploadRessource/" + data.id);
+                                }}
+                                editable={{
+                                  onRowDelete: (oldData) =>
+                                    new Promise((resolve) => {
+                                      setTimeout(() => {
+                                        resolve();
+                                        deleteRessource(oldData);
 
-                              <strong>Title :</strong>
-                              <Input
-                                id="title"
-                                name="title"
-                                inputProps={{
-                                  placeholder: "Your title here",
+                                        // setState((prevState) => {
+                                        //   const data = [...prevState.data];
+                                        //   data.splice(data.indexOf(oldData), 1);
+                                        //   return { ...prevState, data };
+                                        // });
+                                      }, 600);
+                                    }),
                                 }}
-                                fullWidth
-                                value={title}
-                                onChange={(e) => handleChange(e, "title")}
                               />
-                              <br />
-                              <br />
-                              <br />
+                            </>
+                          ),
+                        },
+                        {
+                          tabButton: "Add New Ressource",
+                          tabIcon: PlaylistAddIcon,
+                          tabContent: (
+                            <>
+                              <form onSubmit={handleRessource}>
+                                <h1>Add New Ressource</h1>
 
-                              <strong>Description :</strong>
-                              <Input
-                                id="description"
-                                name="description"
-                                inputProps={{
-                                  placeholder: "your description here ",
-                                }}
-                                fullWidth
-                                value={description}
-                                onChange={(e) => handleChange(e, "description")}
-                              />
-                              <br />
-                              <br />
-                              <br />
-                              <strong>Add file :</strong>
-                              <Input
-                                id="idfile"
-                                name="file"
-                                type="file"
-                                inputProps={{
-                                  placeholder: "File",
-                                }}
-                                onChange={handleUploadClick1}
-                              />
-                              <br />
-                              <br />
-                              <strong>Add Photo :</strong>
-                              <input
-                                id="idPhoto"
-                                name="image"
-                                type="file"
-                                inputProps={{
-                                  placeholder: "Photo",
-                                }}
-                                accept='image/*'
-                                onChange={handleUploadClick2}
-                              />
-                              <br />
-                              <br />
-                              <strong>Add Video:</strong>
-                              <Input
-                                id="idVideo"
-                                name="video"
-                                type="file"
-                                inputProps={{
-                                  placeholder: "Video",
-                                }}
-                                onChange={handleUploadClick3}
-                              />
+                                <strong>Title :</strong>
+                                <Input
+                                  id="title"
+                                  name="title"
+                                  inputProps={{
+                                    placeholder: "Your title here",
+                                  }}
+                                  fullWidth
+                                  value={title}
+                                  onChange={(e) => handleChange(e, "title")}
+                                />
+                                <br />
+                                <br />
+                                <br />
 
-                              <br />
-                              <br />
-                              <Button color="primary" type="submit" round>
-                                Save
-                              </Button>
-                              <Button round>Cancel</Button>
-                              <br />
-                              <br />
-                            </form>
-                          </>
-                        ),
-                      },
-                    ]}
-                  />
-                </GridItem>
-                {/* <GridItem xs={12} sm={12} md={6}>
+                                <strong>Description :</strong>
+                                <Input
+                                  id="description"
+                                  name="description"
+                                  inputProps={{
+                                    placeholder: "your description here ",
+                                  }}
+                                  fullWidth
+                                  value={description}
+                                  onChange={(e) =>
+                                    handleChange(e, "description")
+                                  }
+                                />
+                                <br />
+                                <br />
+                                <br />
+                                <strong>Add file :</strong>
+                                <Input
+                                  id="idfile"
+                                  name="file"
+                                  type="file"
+                                  inputProps={{
+                                    placeholder: "File",
+                                  }}
+                                  onChange={handleUploadClick1}
+                                />
+                                <br />
+                                <br />
+                                <strong>Add Photo :</strong>
+                                <input
+                                  id="idPhoto"
+                                  name="image"
+                                  type="file"
+                                  inputProps={{
+                                    placeholder: "Photo",
+                                  }}
+                                  accept="image/*"
+                                  onChange={handleUploadClick2}
+                                />
+                                <br />
+                                <br />
+                                <strong>Add Video:</strong>
+                                <Input
+                                  id="idVideo"
+                                  name="video"
+                                  type="file"
+                                  inputProps={{
+                                    placeholder: "Video",
+                                  }}
+                                  onChange={handleUploadClick3}
+                                />
+
+                                <br />
+                                <br />
+                                <Button color="primary" type="submit" round>
+                                  Save
+                                </Button>
+                                <Button round>Cancel</Button>
+
+                                <br />
+                                <br />
+                              </form>
+                            </>
+                          ),
+                        },
+                      ]}
+                    />
+                  </GridItem>
+                  {/* <GridItem xs={12} sm={12} md={6}>
                 <div className={classes.profile}>
                   <div className={classes.name}>
                     <h2>write HERE</h2>
                   </div>
                 </div>
               </GridItem> */}
-              </GridContainer>
+                </GridContainer>
+              </div>
             </div>
           </div>
+          <Footer />
         </div>
+        <div className={classNames(classes.main, classes.mainRaised)}></div>
         <Footer />
       </div>
-      <div className={classNames(classes.main, classes.mainRaised)}></div>
-      <Footer />
-    </div>
-  );
+    );
 }
 
 export default RessourcePage;

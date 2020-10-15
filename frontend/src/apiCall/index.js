@@ -32,6 +32,17 @@ const apiCallFormation = (url, method, body = {}, token = "") =>
       ...composeToken(token),
     },
   });
+  const apiCallNotification = (url, method, body = {}, token = "") =>
+  axios({
+    method,
+    url: `http://localhost:8094/api/notification${url}`,
+    data: body,
+    headers: {
+      ...composeToken(token),
+    },
+  });
+  
+
 const apiCallRessource = (url, method, body = {}, config = {}, token = "") =>
   axios({
     method,
@@ -68,4 +79,5 @@ export {
   apiCalltestNiveau,
   apiCallRessource,
   apiCallCompetence,
+  apiCallNotification
 };

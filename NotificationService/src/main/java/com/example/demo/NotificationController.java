@@ -32,13 +32,13 @@ public class NotificationController {
 
 	// Get a all notifications by ID receiver 
 	//--------------------------------------------------------
-	
+	@CrossOrigin
 	@ApiOperation("Get all Notification of a receiver")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully  Get all Notification of a receiver"),
 			@ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
 			@ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
 			@ApiResponse(code = 404, message = "The resource  not found") })
-	@GetMapping("/{id}")
+	@GetMapping("/receiver/{id}")
 	public List<Notification> GetNotBySender(@PathVariable String idR) {
 		List<Notification> l= new ArrayList();
 		int i =0;
@@ -54,6 +54,7 @@ public class NotificationController {
 	
 // Get all !notification APi
 //--------------------------------------------------------
+	@CrossOrigin
 	@ApiOperation("Get All Notifications")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully get All Notifications"),
 			@ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
@@ -69,7 +70,7 @@ public class NotificationController {
 
 	// Get a notification by ID 
 	//--------------------------------------------------------
-	
+	@CrossOrigin
 	@ApiOperation("Get a Notification")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully get a nNotification by ID"),
 			@ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
@@ -82,20 +83,21 @@ public class NotificationController {
 	
 		// Get add !notification APi
 	//--------------------------------------------------------
+	@CrossOrigin
 	@ApiOperation("Add Notification")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully added a Notification"),
 			@ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
 			@ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
 			@ApiResponse(code = 404, message = "The resource  not found") 
 	})
-	@PostMapping("/")
+	@PostMapping("/add")
 	public Notification postFormation(@RequestBody Notification Formation) {
 		return notificationRepo.save(Formation);
 	}
 
 	// Get update !notification APi
 	//--------------------------------------------------------
-
+	@CrossOrigin
 
 	@ApiOperation("Update Formation")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully update Formation"),
@@ -120,7 +122,7 @@ public class NotificationController {
 
 	// Get delete !notification APi
 	//--------------------------------------------------------
-
+	@CrossOrigin
 	@ApiOperation("Delete Formation")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfully retrieved the Notification"),
 			@ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),

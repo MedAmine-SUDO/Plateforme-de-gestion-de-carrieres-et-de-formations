@@ -1,12 +1,30 @@
 import { apiCallRessource } from "../apiCall/index";
 
-export const ressourceGetData = () => async (dispatch) => {
+export const imageGetData = (id) => async (dispatch) => {
   try {
-    const res = await apiCallRessource("/", "get");
+    dispatch({ type: "RESSOURCE_LOADING" });
+    const res = await apiCallRessource("/photo/"+id, "get");
+    dispatch({ type: "RESSOURCE_GET_DATA", payload: res.data });
+
     return res;
-  } catch (err) {}
+  } catch (err) {
+    dispatch({ type: "RESSOURCE_END_LOADING" });
+
+  }
 };
-export const ressourceGetAll = () => async (dispatch) => {
+export const ressourceGetData = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: "RESSOURCE_LOADING" });
+    const res = await apiCallRessource("/"+id, "get");
+    dispatch({ type: "RESSOURCE_GET_DATA", payload: res.data });
+
+    return res;
+  } catch (err) {
+    dispatch({ type: "RESSOURCE_END_LOADING" });
+
+  }
+};
+export const ressourceGetAll = (id) => async (dispatch) => {
   try {
     dispatch({ type: "RESSOURCE_LOADING" });
     const res = await apiCallRessource("/all", "get");

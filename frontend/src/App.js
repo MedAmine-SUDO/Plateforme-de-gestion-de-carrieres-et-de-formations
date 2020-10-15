@@ -16,6 +16,7 @@ import DefaultPage from "./containers/Pages/Default/DefaultPage";
 import TestNiveauAdmin from "./containers/Pages/TestPage/TestNiveauAdmin";
 import RessourcePage from "./containers/Pages/RessourcePage/RessourcePage";
 import FormationPage from "./containers/Pages/FormationPage/FormationPage";
+import RessourceDetail from "./containers/Pages/RessourcePage/RessourceDetail";
 
 function App() {
   const authDetail = useSelector((state) => state.auth);
@@ -65,6 +66,7 @@ function App() {
 
           <Route path="/test" exact component={TestNiveauAdmin} />
           <Route path="/uploadRessource" exact component={RessourcePage} />
+          <Route path="/uploadRessource/:id" exact component={RessourceDetail} />
 
           <WiemRoutes />
           <RanimRoutes />

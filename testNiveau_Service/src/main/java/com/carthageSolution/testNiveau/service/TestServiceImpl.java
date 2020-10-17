@@ -140,7 +140,6 @@ public class TestServiceImpl implements TestService{
 
     public List<Question> get5RandomQuestionsByDifficulty(Difficulty difficulty){
         List<Question> questions = questionRepository.findByDifficulty(difficulty);
-        System.out.println(questions);
         List<Question> newQuestionList = new ArrayList<>();
 
         ArrayList<Integer> list = new ArrayList<Integer>();

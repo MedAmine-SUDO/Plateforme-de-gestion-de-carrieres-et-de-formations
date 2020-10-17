@@ -1,7 +1,5 @@
 package com.carthageSolution.learningStyleTest.controller;
 
-import com.carthageSolution.learningStyleTest.model.Answer;
-import com.carthageSolution.learningStyleTest.model.Category;
 import com.carthageSolution.learningStyleTest.model.Question;
 import com.carthageSolution.learningStyleTest.model.Test;
 import com.carthageSolution.learningStyleTest.service.TestService;
@@ -30,27 +28,27 @@ public class ResultController {
     @Autowired
     private TestService testService;
 
-    //Get your learning style by specifiying test id
+    //Get your learning style by specifying test id
     @ApiOperation("Get Your LearningStyle by Test ID")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully get LearningStyle"),
             @ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
             @ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
             @ApiResponse(code = 404, message = "The resource  not found")})
     @GetMapping("/style/{id}")
-    public String getlearningStyle(@PathVariable("id") String id){
+    public String getLearningStyle(@PathVariable("id") String id){
         StringBuilder style= new StringBuilder("Your learning style is ");
         HashMap<String, Integer> map = getResult(id);
         for(Map.Entry<String, Integer> set: map.entrySet()){
             if(set.getValue() != 0){
                 switch(set.getKey()){
-                    case "VISUAL": style.append(set.getKey()); break;
-                    case "AURAL": style.append(set.getKey()); break;
-                    case "READWRITE": style.append(set.getKey()); break;
-                    case "KINESTHETIC": style.append(set.getKey()); break;
+                    case "VISUAL":
+                    case "AURAL":
+                    case "READWRITE":
+                    case "KINESTHETIC":
+                        style.append(set.getKey()); break;
                 }
             }
         }
-
         return style.toString();
     }
 
@@ -70,14 +68,13 @@ public class ResultController {
         Optional<Test> test = testService.findById(id);
         Test newTest = test.get();
         List<Question> questionList = newTest.getQuestionList();
-        for (int i = 0; i < questionList.size(); i++) {
-            Question question = questionList.get(i);
-            for(int j=0;j<question.getAnswers().size();j++){
-                if(question.getAnswers().get(j).isChecked()){
+        for (Question question : questionList) {
+            for (int j = 0; j < question.getAnswers().size(); j++) {
+                if (question.getAnswers().get(j).isChecked()) {
                     String categ = question.getAnswers().get(j).getAnswerCategory().toString();
-                    if(map.containsKey(categ)){
-                        Integer val = (Integer) map.get(categ);
-                        map.replace(categ, val+1);
+                    if (map.containsKey(categ)) {
+                        Integer val = map.get(categ);
+                        map.replace(categ, val + 1);
                     }
                 }
             }

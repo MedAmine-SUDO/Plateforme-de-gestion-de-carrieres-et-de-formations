@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.awt.print.Pageable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class TestServiceImpl implements TestService {
@@ -35,12 +32,16 @@ public class TestServiceImpl implements TestService {
     @Override
     public void saveTest(Integer nbrQuestions) {
         List<Question> questionList = questionRepository.findAll();
-        Random rand = new Random();
         List<Question> newQuestionList = new ArrayList<>();
 
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        for (int i=0; i<nbrQuestions; i++) {
+            list.add(new Integer(i));
+        }
+        Collections.shuffle(list);
+
         for(int i=0; i<nbrQuestions;i++){
-            int randomIndex = rand.nextInt(questionList.size());
-            newQuestionList.add(questionList.get(randomIndex));
+            newQuestionList.add(questionList.get(list.get(i)));
         }
         Test test = new Test();
         test.setQuestionList(newQuestionList);

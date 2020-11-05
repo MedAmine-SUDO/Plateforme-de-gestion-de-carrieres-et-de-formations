@@ -1,15 +1,12 @@
 package com.carthageSolution.learningStyleTest.controller;
 
-import com.carthageSolution.learningStyleTest.model.Question;
 import com.carthageSolution.learningStyleTest.model.Test;
-import com.carthageSolution.learningStyleTest.service.SequenceGeneratorService;
 import com.carthageSolution.learningStyleTest.service.TestService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +34,7 @@ public class TestController {
         return testService.findAll();
     }
 
-    //Automatically create a test by specifiying number of questions in that test
+    //Automatically create a test by specifying number of questions in that test
     @ApiOperation("Create Test By Specifying nbr of questions")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully Create Test"),
             @ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
@@ -49,15 +46,15 @@ public class TestController {
         return new ResponseEntity("Test created successfully", HttpStatus.OK);
     }
 
-    //Get a test by its number
-    @ApiOperation("Get Test By it's Nbr")
+    //Get a test by id
+    @ApiOperation("Get Test By it's Id")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully get Test"),
             @ApiResponse(code = 401, message = "The request has not been applied because it lacks valid authentication credentials for the target resource"),
             @ApiResponse(code = 403, message = "The server understood the request but refuses to authorize it"),
             @ApiResponse(code = 404, message = "The resource  not found")})
-    @GetMapping("/{nbr}")
-    public Test getTestByNbr(@PathVariable("nbr") Integer nbr){
-        return testService.findByNumTest(nbr);
+    @GetMapping("/{id}")
+    public Optional<Test> getTestById(@PathVariable("id") String id){
+        return testService.findById(id);
     }
 
     //Delete all tests

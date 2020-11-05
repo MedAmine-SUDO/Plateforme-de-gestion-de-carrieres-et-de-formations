@@ -24,7 +24,7 @@ export const notificationGetData = (id) => async (dispatch) => {
 export const notificationPostData = (notification) => async (dispatch) => {
   try {
     dispatch({ type: "NOTIFICATION_LOADING" });
-    const res = await apiCallNotification("/", "post",notification);
+    const res = await apiCallNotification("/add", "post",notification);
     dispatch({ type: "NOTIFICATION_GET_DATA", payload: res.data });
 
     return res;
@@ -46,7 +46,7 @@ export const notificationDeleteData = (id) => async (dispatch) => {
   export const notificationByUSer = (id) => async (dispatch) => {
     try {
       dispatch({ type: "NOTIFICATION_LOADING" });
-      const res = await apiCallNotification("/receiver/", "get");
+      const res = await apiCallNotification("/receiver/"+id, "get");
       dispatch({ type: "NOTIFICATION_GET_DATA", payload: res.data });
   
       return res;

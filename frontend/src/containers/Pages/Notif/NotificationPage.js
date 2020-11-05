@@ -36,8 +36,8 @@ function NotificationPage() {
       //{ title: "Competence", field: "competence[0]" },
       { title: "Sender", field: "Sender", type: "date" },
       { title: "Type", field: "Type"},
-      { title: "Date", field: "endDate" },
-      { title: "seen", field: "Seen"},
+      { title: "Date", field: "Date" },
+      { title: "Seen", field: "Seen"},
       
     ],
     data: [],

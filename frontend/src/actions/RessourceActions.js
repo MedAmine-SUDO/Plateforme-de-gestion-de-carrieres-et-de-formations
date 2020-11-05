@@ -12,6 +12,42 @@ export const imageGetData = (id) => async (dispatch) => {
 
   }
 };
+export const fileGetData = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: "RESSOURCE_LOADING" });
+    const res = await apiCallRessource("/file/"+id, "get");
+    dispatch({ type: "RESSOURCE_GET_DATA", payload: res.data });
+
+    return res;
+  } catch (err) {
+    dispatch({ type: "RESSOURCE_END_LOADING" });
+
+  }
+};
+export const videoGetData = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: "RESSOURCE_LOADING" });
+    const res = await apiCallRessource("/video/"+id, "get");
+    dispatch({ type: "RESSOURCE_GET_DATA", payload: res.data });
+
+    return res;
+  } catch (err) {
+    dispatch({ type: "RESSOURCE_END_LOADING" });
+
+  }
+};
+export const videoStreamGetData = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: "RESSOURCE_LOADING" });
+    const res = await apiCallRessource("/videos/stream/"+id, "get");
+    dispatch({ type: "RESSOURCE_GET_DATA", payload: res.data });
+
+    return res;
+  } catch (err) {
+    dispatch({ type: "RESSOURCE_END_LOADING" });
+
+  }
+};
 export const ressourceGetData = (id) => async (dispatch) => {
   try {
     dispatch({ type: "RESSOURCE_LOADING" });

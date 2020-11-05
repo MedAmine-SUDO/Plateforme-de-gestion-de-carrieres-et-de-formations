@@ -8,8 +8,15 @@ import GridItem from "../../../components/Grid/GridItem.js";
 import Footer from "../../../components/Footer/Footer.js";
 import NavPills from "../../../components/NavPills/NavPills.js";
 import Check from "@material-ui/icons/Check";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
+
+import CircularProgress from "@material-ui/core/CircularProgress";
+import {
+  notificationByUSer,
+  notificationDeleteData,
+notificationGetAll,
+notificationPostData,
+} from "../../../actions/NotificationActions";
 import Warning from "@material-ui/icons/Warning";
 import SnackbarContent from "../../../components/Snackbar/SnackbarContent.js";
 //import Dashboard from "@material-ui/icons/Dashboard";
@@ -38,6 +45,7 @@ const useStyles = makeStyles(styles);
 function RessourcePage() {
   const [alertDelete, setAlertDelete] = useState(null);
   const ressourceData = useSelector((state) => state.ressource);
+  //const [notif,setnotifData] = useState((state)=>state.notification);
 
   const history = useHistory();
   const classes = useStyles();
@@ -50,16 +58,29 @@ function RessourcePage() {
   const [setVideo] = useState("");
   const [ressource, setRessourceData] = useState(new FormData());
 
+  const authDetail = useSelector((state) => state.auth);
+  const [titleNot,setTitleNotif]= useState("");
+  const [descriptionNot,setDescriptionNotif]= useState("");
+  const [sender,setSender]= useState("");
+  const [receiver,setReceiver]= useState("");
+
+  const [type,setTypeNotif]= useState("Ressource Added");
+  const [seen,setSeen]= useState("FALSE");
+  const [date,setDate]=useState("");
+  const notif=useState("");
   const handleChange = (e, name) => {
+ 
     const ressource = {};
     ressource[name] = e.target.value;
     // validations
     switch (name) {
       case "description":
         setDescription(ressource.description);
+        setDescriptionNotif(notif.setDescriptionNotif);
         break;
       case "title":
         setTitle(ressource.title);
+        setTitleNotif(notif.titleNot);
         break;
       case "file":
         setFile(ressource.file);
@@ -70,8 +91,12 @@ function RessourcePage() {
       case "video":
         setVideo(ressource.video);
         break;
+      
+        
+
       default:
         break;
+        
     }
   };
   const handleUploadClick3 = (event) => {
@@ -79,12 +104,12 @@ function RessourcePage() {
     ressource.append("video", video);
 
     setRessourceData(ressource);
-    //history.push("/uploadRessource/");
+   
+   
   };
   const handleUploadClick2 = (event) => {
     let image = event.target.files[1];
     ressource.append("image", image);
-
     setRessourceData(ressource);
   };
   const handleUploadClick1 = (event) => {
@@ -99,14 +124,46 @@ function RessourcePage() {
     ressource.append("video", video);
 
     setRessourceData(ressource);
+
   };
   const handleRessource = async (e) => {
     e.preventDefault();
     ressource.append("title", title);
     ressource.append("description", description);
     dispatch(ressourcePostData(ressource)).then((res) => {
+     
       console.log(res);
+      
+      let titleNot = notif.title;
+      let descriptionNot = notif.description;
+      let niveau = notif.niveau;
+      let date = new Date();
+      let type = notif.type;
+      let body  = notif.body;
+      let idReceiver = notif.receiver;
+      let idSender = notif.sender;
+      let seen = notif.seen;
+      let object=notif.object;
+
+	     dispatch(
+        notificationPostData({
+          titleNot,
+          descriptionNot,
+          idReceiver,
+          idSender,
+          date,
+          object,
+          seen,
+          type,
+          body
+        })
+      ).then((resn) => {
+        console.log(resn)
+      });
+
     });
+    
+  
   };
 
   const [state, setState] = useState({

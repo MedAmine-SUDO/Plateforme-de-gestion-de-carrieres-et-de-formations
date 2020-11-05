@@ -6,12 +6,12 @@ const defaultPageStyle = {
   container,
   profile: {
     textAlign: "center",
-    "& img": {
-      maxWidth: "160px",
-      width: "100%",
-      margin: "0 auto",
-      transform: "translate3d(0, -50%, 0)"
-    }
+    // "& img": {
+    //   maxWidth: "160px",
+    //   width: "100%",
+    //   margin: "0 auto",
+    //   transform: "translate3d(0, -50%, 0)"
+    // }
   },
   description: {
     margin: "1.071rem auto 0",

@@ -17,22 +17,28 @@ import TestNiveauAdmin from "./containers/Pages/TestPage/TestNiveauAdmin";
 import RessourcePage from "./containers/Pages/RessourcePage/RessourcePage";
 import FormationPage from "./containers/Pages/FormationPage/FormationPage";
 import RessourceDetail from "./containers/Pages/RessourcePage/RessourceDetail";
+import Header from "./containers/AdminDashboard/Header";
 
 function App() {
   const authDetail = useSelector((state) => state.auth);
   if (!authDetail.user)
     return (
       <div className="App">
+      
         <CssBaseline />
+        
         <nav>
           <NavBar />
+         
         </nav>
+        
         <Switch>
            {/* Landing page*/}
           <Route path="/" exact component={LandingPage} />
           <Route path="/signup" exact component={SignUp} />
           <Route path="/signin" exact component={SignIn} />
         </Switch>
+       
       </div>
     );
   else if (authDetail.user.roles[0] === "ROLE_ADMIN")

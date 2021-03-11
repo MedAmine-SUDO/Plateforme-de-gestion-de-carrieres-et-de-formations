@@ -71,8 +71,8 @@ function App() {
           <Route path={"/default"} exact component={DefaultPage} />
 
           <Route path="/test" exact component={TestNiveauAdmin} />
-          <Route path="/uploadRessource" exact component={RessourcePage} />
-          <Route path="/uploadRessource/:id" exact component={RessourceDetail} />
+          {/* <Route path="/uploadRessource" exact component={RessourcePage} />
+          <Route path="/uploadRessource/:id" exact component={RessourceDetail} /> */}
 
           <WiemRoutes />
           <RanimRoutes />
